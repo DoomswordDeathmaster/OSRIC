@@ -56,7 +56,7 @@
 			<script>
 				function action(draginfo)
 					local nodeChar = window.getDatabaseNode();
-					ActionInitManagerADND1e.delayActor(nodeChar);
+					ActionInitManagerOsric.delayActor(nodeChar);
 					return true;
 				end
 				

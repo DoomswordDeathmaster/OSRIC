@@ -3,7 +3,7 @@ function onInit()
 end
 
 function getWoundPercentNew(rActor)
-    --Debug.console("manager_actor_helth_adnd1e.lua 7", "getWoundPercentNew")
+    --Debug.console("manager_actor_helth_osric.lua 7", "getWoundPercentNew")
     -- local rActor = ActorManager.resolveActor(node);
     -- local node = ActorManager.getCreatureNode(rActor);
     local sNodeType, node = ActorManager.getTypeAndNode(rActor)
@@ -60,7 +60,7 @@ function getWoundPercentNew(rActor)
 
     --end
 
-    --Debug.console("manager_actor_health_adnd1e.lua 62", nWounds, nPercentWounded, nHP, nCurrentHp)
+    --Debug.console("manager_actor_health_osric.lua 62", nWounds, nPercentWounded, nHP, nCurrentHp)
 
     if nPercentWounded >= 1 then
         if nCurrentHp <= nDEAD_AT then

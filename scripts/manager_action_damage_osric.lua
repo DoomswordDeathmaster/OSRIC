@@ -1,5 +1,5 @@
 function onInit()
-    Debug.console("manager_action_damage_adnd1e.lua", "init")
+    Debug.console("manager_action_damage_osric.lua", "init")
     ActionDamage.applyDamage = applyDamageNew
     ActionDamage.modDamage = modDamageNew
 end
@@ -391,7 +391,7 @@ end
 
 -- brought this is to handle Death's Door changes, TODO: apply new Death's Door Threshold options
 function applyDamageNew(rSource, rTarget, bSecret, sDamage, nTotal, aDice)
-    Debug.console("manager_action_damage_adnd1e.lua", "applyDamageNew", "aDice", aDice)
+    Debug.console("manager_action_damage_osric.lua", "applyDamageNew", "aDice", aDice)
     -- Get health fields
     local sTargetType, nodeTarget = ActorManager.getTypeAndNode(rTarget)
 
@@ -920,13 +920,13 @@ function updatePcCondition(
     nAdjustedDamage)
     -- effects management
     --if sTargetType == "pc" then
-    Debug.console("manager_action_attack_adnd1e.lua 897", "pc")
+    Debug.console("manager_action_attack_osric.lua 897", "pc")
     -- ^^ was PC
     --local nDeathValue = (nTotalHP - nWounds) - nDmgBeyondTotalHp;
 
     -- todo: done? fix this for deaths door and add coma effect
     Debug.console(
-        "manager_action_attack_adnd1e.lua 902",
+        "manager_action_attack_osric.lua 902",
         sDamageType,
         rSource,
         nWounds,
@@ -1113,7 +1113,7 @@ function updateHealthStatus(
     nWounds,
     nDmgBeyondTotalHp)
     Debug.console(
-        "manager_action_attack_adnd1e.lua 1116",
+        "manager_action_attack_osric.lua 1116",
         sTargetType,
         nodeTarget,
         nDeathSaveSuccess,

@@ -24,7 +24,7 @@
     <includefile source="campaign/record_char_main.xml" />
     <includefile source="campaign/record_class.xml" />
     <includefile source="campaign/record_npc.xml" />
-    <includefile source="campaign/template_char_adnd1e.xml" />
+    <includefile source="campaign/template_char_osric.xml" />
     <includefile source="campaign/template_cta.xml" />
     <includefile source="campaign/template_npc.xml" />
     <includefile source="campaign/template_campaign.xml" />
@@ -33,21 +33,21 @@
     <includefile source="graphics/graphics_icons.xml" />
 
     <!-- High-level scripts -->
-    <script name="DataCommonADND1e" file="scripts/data_common_adnd1e.lua" />
+    <script name="DataCommonOsric" file="scripts/data_common_osric.lua" />
     <script name="Options5E" file="scripts/data_options_5e.lua" />
     <script name="OptionsADND" file="scripts/data_options_adnd.lua" />
-    <script name="ActionInitManagerADND1e" file="scripts/manager_action_init_adnd1e.lua" />
-    <script name="ActionSurpriseManagerADND1e" file="scripts/manager_action_surprise_adnd1e.lua" />
-    <script name="OptionsADND1e" file="scripts/data_options_adnd1e.lua" />
-    <script name="CombatManagerADND1e" file="scripts/manager_combat_adnd1e.lua" />
+    <script name="ActionInitManagerOsric" file="scripts/manager_action_init_osric.lua" />
+    <script name="ActionSurpriseManagerOsric" file="scripts/manager_action_surprise_osric.lua" />
+    <script name="OptionsOsric" file="scripts/data_options_osric.lua" />
+    <script name="CombatManagerOsric" file="scripts/manager_combat_osric.lua" />
     <script name="FightsSavesAsManager" file="scripts/manager_fights_saves_as.lua" />
     <script name="NpcClickChooser" file="campaign/scripts/npc_click_chooser.lua" />
     <script name="CharEncumbranceManager" file="scripts/manager_char_encumbrance.lua" />
-    <script name="ActorHealthManagerADND1e" file="scripts/manager_actor_health_adnd1e.lua" />
-    <script name="ActionDamageADND1e" file="scripts/manager_action_damage_adnd1e.lua" />
+    <script name="ActorHealthManagerOsric" file="scripts/manager_actor_health_osric.lua" />
+    <script name="ActionDamageOsric" file="scripts/manager_action_damage_osric.lua" />
 
     <!-- <includefile source="strings/strings_adnd.xml" /> -->
-    <includefile source="strings/strings_adnd1e.xml" />
+    <includefile source="strings/strings_osric.xml" />
     <!-- <includefile source="strings/strings_utility.xml" /> -->
 </base>
     

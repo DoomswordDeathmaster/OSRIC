@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <root>
     <!-- Options header strings  -->
-    <string name="option_header_adnd1e">AD&amp;D 1e/OSRIC</string>
+    <string name="option_header_osric">AD&amp;D 1e/OSRIC</string>
 
     <!-- Option label strings -->
-    <string name="option_label_adnd1e_ability_check_allow">Allow Ability Checks\rForcing Off and Removing,\rUse AD&amp;D Options and House Rules Extension instead of Core 1E</string>
-    <string name="option_label_adnd1e_initiative_delay_allow">OSRIC Initiative Delay</string>
-    <string name="option_label_adnd1e_initiative_osric_swap">OSRIC Initiative Swap</string>
-    <string name="option_label_adnd1e_osric_monster_matrices">OSRIC Monster Attack Matrices</string>
+    <string name="option_label_osric_ability_check_allow">Allow Ability Checks\rForcing Off and Removing,\rUse AD&amp;D Options and House Rules Extension instead of Core 1E</string>
+    <string name="option_label_osric_initiative_delay_allow">OSRIC Initiative Delay</string>
+    <string name="option_label_osric_initiative_osric_swap">OSRIC Initiative Swap</string>
+    <string name="option_label_osric_osric_monster_matrices">OSRIC Monster Attack Matrices</string>
 
     <!-- <string name="option_label_adnd_op_hr_initiative_modifiers_allow">Allow Initiative Modifiers</string> -->
     <!-- <string name="option_label_adnd_op_hr_initiative_ties_allow">Initiative Grouping: Allow Ties</string> -->
@@ -17,7 +17,7 @@
     <!-- <string name="option_labeel_adnd_op_hr_initiative_ordering">Initiative Ordering</string> -->
     <!-- <string name="option_label_adnd_op_hr_initiative_grouping">Initiative Grouping</string> -->
     <!-- <string name="option_label_adnd_op_hr_add1e_properties">Use 1e Properties</string> -->
-    <!-- <string name="option_label_adnd1e_round_start_reset_init">Initiative Reset on Round Start</string> -->
+    <!-- <string name="option_label_osric_round_start_reset_init">Initiative Reset on Round Start</string> -->
 
     <!-- Option value strings -->
     <!-- <string name="option_val_d6">d6</string> -->

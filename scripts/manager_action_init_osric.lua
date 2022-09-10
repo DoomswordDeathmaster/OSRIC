@@ -37,24 +37,24 @@ function handleApplyInitNew(msgOOB)
 		if ActorManager.isPC(rSource) then
 			-- OSRIC initiative swap
 			if bOsricInitiativeSwap then
-				CombatManagerADND1e.applyInitResultToAllNPCs(nTotal)
+				CombatManagerOsric.applyInitResultToAllNPCs(nTotal)
 			else
-				CombatManagerADND1e.applyInitResultToAllPCs(nTotal)
+				CombatManagerOsric.applyInitResultToAllPCs(nTotal)
 			end
 		end
 	else
 		if ActorManager.isPC(rSource) then
-			CombatManagerADND1e.applyInitResultToAllPCs(nTotal)
+			CombatManagerOsric.applyInitResultToAllPCs(nTotal)
 			PC_LASTINIT = nTotal
 		elseif not ActorManager.isPC(rSource) then
-			CombatManagerADND1e.applyInitResultToAllNPCs(nTotal)
+			CombatManagerOsric.applyInitResultToAllNPCs(nTotal)
 			NPC_LASTINIT = nTotal
 		end
 
 		-- OSRIC initiative swap
 		if bOsricInitiativeSwap then
-			CombatManagerADND1e.applyInitResultToAllPCs(NPC_LASTINIT)
-			CombatManagerADND1e.applyInitResultToAllNPCs(PC_LASTINIT)
+			CombatManagerOsric.applyInitResultToAllPCs(NPC_LASTINIT)
+			CombatManagerOsric.applyInitResultToAllNPCs(PC_LASTINIT)
 		end
 	end
 end
