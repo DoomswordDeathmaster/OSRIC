@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root>
+    <!-- Options header strings  -->
+    <string name="option_header_adnd1e">AD&amp;D 1e/OSRIC</string>
+
+    <!-- Option label strings -->
+    <string name="option_label_adnd1e_ability_check_allow">Allow Ability Checks\rForcing Off and Removing,\rUse AD&amp;D Options and House Rules Extension instead of Core 1E</string>
+    <string name="option_label_adnd1e_initiative_delay_allow">OSRIC Initiative Delay</string>
+    <string name="option_label_adnd1e_initiative_osric_swap">OSRIC Initiative Swap</string>
+    <string name="option_label_adnd1e_osric_monster_matrices">OSRIC Monster Attack Matrices</string>
+
+    <!-- <string name="option_label_adnd_op_hr_initiative_modifiers_allow">Allow Initiative Modifiers</string> -->
+    <!-- <string name="option_label_adnd_op_hr_initiative_ties_allow">Initiative Grouping: Allow Ties</string> -->
+    <!-- <string name="option_label_adnd_op_hr_surprise_die">Surprise Die</string> -->
+    <!-- <string name="option_label_adnd_op_hr_use_2e_kits">Use 2e Kits</string> -->
+    <!-- <string name="option_label_adnd_op_hr_initiative_di">Initiative Die</string> -->
+    <!-- <string name="option_labeel_adnd_op_hr_initiative_ordering">Initiative Ordering</string> -->
+    <!-- <string name="option_label_adnd_op_hr_initiative_grouping">Initiative Grouping</string> -->
+    <!-- <string name="option_label_adnd_op_hr_add1e_properties">Use 1e Properties</string> -->
+    <!-- <string name="option_label_adnd1e_round_start_reset_init">Initiative Reset on Round Start</string> -->
+
+    <!-- Option value strings -->
+    <!-- <string name="option_val_d6">d6</string> -->
+    <!-- <string name="option_val_d10">d10</string> -->
+    <!-- <string name="option_val_d12">d12</string> -->
+    <!-- <string name="option_val_ascending">Ascending</string> -->
+    <!-- <string name="option_val_descending">Descending</string> -->
+    <!-- <string name="option_val_pc">PC</string>
+    <string name="option_val_npc">NPC</string>
+    <string name="option_val_neither">Neither</string>
+    <string name="option_val_both">Both</string> -->
+
+    <string name="option_val_zero">HP 0</string>
+    <string name="option_val_minus_three">HP 0 to -3</string>
+    <string name="option_val_zero_or_less">HP 0 to -9</string>
+
+    <!-- { labels = "option_val_zero|option_val_minus_three", values = "exactly_zero|zero_to_minus_three", baselabel = "option_val_zero_or_less", baseval = "zero_or_less", default = "zero_or_less" }); -->
+
+    <!-- NPC sheet -->
+    <string name="npc_label_click_to_choose">Click to select...</string>
+    <string name="npc_label_fights_as">Fights As</string>
+    <string name="npc_label_fights_as_hd_level">Level or HD</string>
+    <string name="npc_label_saves_as">Saves As</string>
+    <string name="npc_label_saves_as_hd_level">Level or HD</string>
+
+    <!-- Overrides -->
+    <!-- change the name on this one because it was maddeningly confusing -->
+    <string name="option_label_autoNpcInitiative">Combat: Auto NPC initiative</string>
+
+    <string name="option_label_HR_CRIT">Attack:Damage Bonus on Critical\rForcing Off and Removing\rUse AD&amp;D Options and House Rules Extension instead of Core 1E</string>
+    <string name="option_label_ADND_DEATHSDOOR">Death's Door Threshold</string>
+    <string name="option_label_OPTIONAL_ENCUMBRANCE">Encumbrance\rForcing On and Removing\rUse AD&amp;D Options and House Rules Extension instead of Core 1E</string>
+    <string name="option_label_CURR">Party: Use currency weight\rForcing On and Removing\rUse AD&amp;D Options and House Rules Extension instead of Core 1E</string>
+    
+    <!-- Critical hit and fumble tables -->
+    <string name="option_label_HRFC">Attack: Fumble/Crit Tables\rForcing Off and Removing\rUse AD&amp;D Options and House Rules Extension instead of Core 1E</string>
+</root>
+    

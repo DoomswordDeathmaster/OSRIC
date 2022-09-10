@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="3.0" release="35" logo="logo.png">
+  <announcement text="OSRIC \r(c) Stuart Marshall" font="emotefont" icon="rulesetlogo_DungeonClassic" />
+  <announcement text="OSRIC/1E v2022.09.10 For Fantasy Grounds\r--by Doomsword" font="emotefont" icon="celestian" />
+
+  <!-- Attributes -->
+
+  <description>
+    <displayname>OSRIC</displayname>
+    <displayversion>1E/OSRIC</displayversion>
+    <text>1E/OSRIC ruleset</text>
+    <author>Doomsword</author>
+    <website>https://www.fantasygrounds.com</website>
+  </description>
+
+  <!-- Layers -->
+  <importruleset source="2E" />
+
+  <importinfo>
+    <acceptfrom ruleset="1E" />
+    <acceptfrom ruleset="AD&amp;D Core" />
+    <acceptfrom ruleset="CoreRPG" />
+  </importinfo>
+
+
+<!-- <root version="3.0">
+  <properties>
+    <name>AD&amp;D Options and House Rules</name>
+    <version>1.3</version>
+    <author>Doomsword</author>
+    <description>
+      <text>AD&amp;D Options and House Rules</text>
+      <author>Doomsword</author>
+    </description>
+    <loadorder>99</loadorder>
+    <ruleset>
+      <name>2E</name>
+    </ruleset>
+  </properties>
+
+  <announcement text="AD&amp;D Options and House Rules\rby Doomsword and including Celestian's 1E properties with enhancements.\rFor issues or feature requests, find me on the Discord." font="emotefont" icon="doomsword_icon" />
+
+  <base> -->
+    <includefile source="campaign/record_char_combat.xml" />
+    <includefile source="campaign/record_char_main.xml" />
+    <includefile source="campaign/record_class.xml" />
+    <includefile source="campaign/record_npc.xml" />
+    <includefile source="campaign/template_char_adnd1e.xml" />
+    <includefile source="campaign/template_cta.xml" />
+    <includefile source="campaign/template_npc.xml" />
+    <includefile source="campaign/template_campaign.xml" />
+    <includefile source="cta/cta_host.xml" />
+    <includefile source="graphics/graphics_frames_adnd.xml" />
+    <includefile source="graphics/graphics_icons.xml" />
+
+    <!-- High-level scripts -->
+    <script name="DataCommonADND1e" file="scripts/data_common_adnd1e.lua" />
+    <script name="Options5E" file="scripts/data_options_5e.lua" />
+    <script name="OptionsADND" file="scripts/data_options_adnd.lua" />
+    <script name="ActionInitManagerADND1e" file="scripts/manager_action_init_adnd1e.lua" />
+    <script name="ActionSurpriseManagerADND1e" file="scripts/manager_action_surprise_adnd1e.lua" />
+    <script name="OptionsADND1e" file="scripts/data_options_adnd1e.lua" />
+    <script name="CombatManagerADND1e" file="scripts/manager_combat_adnd1e.lua" />
+    <script name="FightsSavesAsManager" file="scripts/manager_fights_saves_as.lua" />
+    <script name="NpcClickChooser" file="campaign/scripts/npc_click_chooser.lua" />
+    <script name="CharEncumbranceManager" file="scripts/manager_char_encumbrance.lua" />
+    <script name="ActorHealthManagerADND1e" file="scripts/manager_actor_health_adnd1e.lua" />
+    <script name="ActionDamageADND1e" file="scripts/manager_action_damage_adnd1e.lua" />
+
+    <!-- <includefile source="strings/strings_adnd.xml" /> -->
+    <includefile source="strings/strings_adnd1e.xml" />
+    <!-- <includefile source="strings/strings_utility.xml" /> -->
+  <!-- </base> -->
+</root>

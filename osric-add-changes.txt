@@ -1,0 +1,129 @@
+group all initiative (forced)
+grouped init swap (option)
+assign init based on character who rolled (forced)
+remove critical hits (forcing/removing)
+d6 initiative die (forced)
+remove pc vs npc init (forced)
+encumbrance mandatory (forcing/removing)
+remove armor dp (forced)
+remove all initiative mods (forced)
+remove all surprise mods (forced)
+auto-reset initiative every round (forced)
+enable delay only for OSRIC (option), sets delayed actor's init to 7
+remove ability checks (forcing/removing) SEE BOTTOM
+remove kits (forced))
+make currency weight mandatory (forcing/removing)
+change label of auto npc initiative and switch to on/off only (forced)
+remove critical hit/fumble tables (forcing/removing)
+rename to AD&D 1e/OSRIC (forced)
+death's door thresholds
+	exactly 0 (AD&D)
+	0 thru -3 (AD&D)
+	0 thru -9 (OSRIC implied)
+
+	characters brought back to life receive a helpless effect
+	unconcious characters brought back to 1 or more hp receive a coma and a helpless effect
+
+** haven't done anything with spells, in terms of casting time but that would come next
+
+
+
+
+
+
+
+X need to deal with monsters that are automatically set to 99 initiative
+X need to deal with 10 segment rounds
+X get delay working
+X deal with autonpcinitiative
+X fix combat tracker sorting
+X need to deal with death's door
+
+need to bring useful changes into options and house rules mod
+
+
+
+
+Forced defaults
+	Group all initiative
+	Always allow initiative ties
+	d6 initiative die
+	assign init based on character who rolled
+	remove pc vs npc initiative
+	remove armor dp
+	remove all initiative mods
+	auto-reset initiative every round
+	remove kits
+	death's door always on
+
+
+
+check if 2e base ruleset removes effects when wounds manually changed
+
+add an ability check option of 3d6 to AD&D Options and House Rules
+
+
+
+IDEA: maybe we create an entirely new extension and pop a window on Core 1e that tells people that it's no longer being developed
+
+
+
+
+ROBLOX - WRITE A NOTE
+	
+	
+
+
+
+
+
+For anyone playing 1e/OSRIC and/or anyone otherwise interested, this is gonna be kind of long but...
+
+I've been working on bringing changes from the AD&D Options and House Rules extension into the Core 1E extension
+It ended up opening a can of worms in my thought processes and, as might be obvious, it became apparent that we don't need two mods that do the same basic thing
+This led me to believe that the Core 1E mod should really focus on 1E or OSRIC as written (RAW), without additional options
+I believe that the benefits to that are manifold, and I'll be happy to elaborate if anyone wants
+Such an approach would leave the Options and House Rules extension as the extension that provides additional options for running a 1E-styled or even 2E-styled game outside of RAW and would continue to include the Core 1E stuff as an option
+This led me to make some pretty big changes to the Core 1E extension, which might break the way somebody is running their game
+In order to avoid breaking anything, I found the options that definitely aren't a part of 1E/OSRIC RAW (and that were set to defaults faithful to those rulesets) and modified their descriptions to indicate that they'd be going away
+Then, not being sure that that would be the best approach, I've envisioned maybe pushing an update to Core 1E that pops a window to let anyone using it know that it's being replaced, and to instead use the updated Core 1E extension (which I've considered renaming) or the Options and House Rules extension depending upon how they want to run their game
+Doing that would allow me to right away remove the options that I think should be removed given that Core 1E would become RAW only, which I think has several merits
+Anyone desiring to run a non-RAW 1E/2E/OSRIC game or to maintain backward compatability with their current game would then migrate from the Core 1E extension to the Options and House Rules extension
+
+Anyway, here are the changes I've made to Core 1E that I'm looking for input on. They need a final review, test and cleanup for general consumption but I wanted to try to get some feedback before proceeding
+
+reset initiative on round start (forced)
+group all initiative (forced)
+osric initiative swap (option)
+assign init based on character who rolled (forced)
+* remove critical hits (would be forced, noted in option description)
+d6 initiative die (forced)
+remove pc vs npc init (forced)
+* encumbrance mandatory (would be forced, noted in option description)
+remove armor dp (forced)
+remove all initiative mods (forced)
+remove all surprise mods (forced)
+auto-reset initiative every round (forced)
+enable delay only for OSRIC (option), sets delayed actor's init to 7
+* remove ability checks (would be forced, noted in option description)
+remove kits (forced)
+* make currency weight mandatory (would be forced, noted in option description)
+change label of auto npc initiative and switch to on/off only (forced)
+* remove critical hit/fumble tables (would be forced, noted in option description)
+death's door thresholds and associated condition handling, according to AD&D 1E's (2) options or OSRIC
+	exactly 0 (AD&D)
+	0 thru -3 (AD&D)
+	0 thru -9 (OSRIC implied)
+unconscious characters brought back to 1 or more hp receive a coma effect and a helpless effect
+dead characters brought back to life receive a helpless effect
+
+What are your thoughts on this approach? I definitely don't want to tell anyone how to run their games but I do want to make it easier for people to figure out how to run their games, while maintaining fidelity to the original rules for those people (like me) who care about that or don't know the RAW and want to learn
+
+Like I said, it was gonna be long. Sorry about that. Thanks to anyone who reads it. Attaching screenshots of the options as they are.
+
+I'm quite aware that I might be insane but feel free to let me know anyway
+
+PS - I think that perhaps AD&D 1E/OSRIC Rules would be an appropriate name for the new extension that would replace Core 1E
+
+
+
