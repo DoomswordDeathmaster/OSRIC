@@ -33,8 +33,6 @@ function rollRandomInitNew(nMod)
 end
 
 function rollEntryInitNew(nodeEntry)
-    local bOsricInitiativeSwap = (OptionsManager.getOption("useOsricInitiativeSwap") == "on")
-
     Debug.console("nodeEntry", nodeEntry)
 
     if not nodeEntry then
@@ -87,15 +85,10 @@ function rollEntryInitNew(nodeEntry)
         local nTotal = DB.getValue(nodeEntry, "initiative.total", 0)
     end
 
-    -- init grouping swap
-    if bOsricInitiativeSwap then
-        Debug.console("SWAP!")
-        --if bOptPCVNPCINIT then --or (sOptInitGrouping ~= "neither") then
-        applyInitResultToAllPCs(NPC_LASTINIT)
-        applyInitResultToAllNPCs(PC_LASTINIT)
-    --end
-    end
-    --end
+    Debug.console("SWAP!")
+    --if bOptPCVNPCINIT then --or (sOptInitGrouping ~= "neither") then
+    applyInitResultToAllPCs(NPC_LASTINIT)
+    applyInitResultToAllNPCs(PC_LASTINIT)
 end
 
 function applyInitResultToAllPCs(nInitResult)
@@ -169,17 +162,7 @@ function onRoundStartNew(nCurrent)
 
     if bOptAutoNpcInitiative then
         local nInitResult = rollRandomInitNew(0)
-
-        local bOsricInitiativeSwap = (OptionsManager.getOption("useOsricInitiativeSwap") == "on")
-
-        if bOsricInitiativeSwap then
-            applyInitResultToAllPCs(nInitResult)
-        else
-            applyInitResultToAllNPCs(nInitResult)
-        end
-
-        -- DB.setValue(nodeEntry, "initresult", "number", nInitResult)
-        -- DB.setValue(nodeEntry, "initresult_d6", "number", nInitResult)
+        applyInitResultToAllPCs(nInitResult)
     end
 end
 
@@ -322,20 +305,7 @@ function getACHitFromMatrixForNPCNew(nodeCT, nRoll)
             fightsAsHdLevel = 20
         end
 
-        local bUseOsricMonsterMatrix = (OptionsManager.getOption("useOsricMonsterMatrix") == "on")
-        --Debug.console("514", "fightsAsHdLevel", fightsAsHdLevel, "bUseOsricMonsterMatrix", bUseOsricMonsterMatrix);
-
-        if bUseOsricMonsterMatrix then
-            aMatrixRolls = DataCommonADND.aOsricToHitMatrix[fightsAsHdLevel]
-        else
-            aMatrixRolls = DataCommonADND.aMatrix[sHitDice]
-
-            -- for hit dice above 16, use 16
-            if (aMatrixRolls == nil) then
-                sHitDice = "16"
-                aMatrixRolls = DataCommonADND.aMatrix[sHitDice]
-            end
-        end
+        aMatrixRolls = DataCommonADND.aOsricToHitMatrix[fightsAsHdLevel]
     end
 
     --Debug.console("manager_combat_adnd_op_hr","getACHitFromMatrixForNPCNew","aMatrixRolls",aMatrixRolls);

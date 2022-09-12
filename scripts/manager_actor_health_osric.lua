@@ -36,31 +36,8 @@ function getWoundPercentNew(rActor)
     --local nDEAD_AT = -10;
 
     -- changing death's door options, since it always exists in 1e
-    local nDeathDoorThreshold = 0
+    local nDeathDoorThreshold = -9
     local nDEAD_AT = -10
-
-    local sOptHouseRuleDeathsDoor = OptionsManager.getOption("HouseRule_DeathsDoor")
-
-    if sOptHouseRuleDeathsDoor == "exactlyZero" then
-        nDeathDoorThreshold = 0
-    elseif sOptHouseRuleDeathsDoor == "zeroToMinusThree" then
-        nDeathDoorThreshold = -3
-    else
-        -- minus 9 because -10 = dead
-        nDeathDoorThreshold = -9
-    end
-
-    -- force death's door
-    -- if not bDeathsDoor then
-    --     nDEAD_AT = 0;
-    -- end
-
-    --if sTargetType == "pc" then
-    -- ^^ was PC
-
-    --end
-
-    --Debug.console("manager_actor_health_osric.lua 62", nWounds, nPercentWounded, nHP, nCurrentHp)
 
     if nPercentWounded >= 1 then
         if nCurrentHp <= nDEAD_AT then

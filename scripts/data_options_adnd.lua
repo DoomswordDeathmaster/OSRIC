@@ -36,35 +36,35 @@ function registerOptions()
     --   { labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
 
     -- encumbrance should be mandatory
-    -- deprecate option
-    OptionsManager.registerOption2(
-        "OPTIONAL_ENCUMBRANCE",
-        false,
-        "option_header_adnd_options",
-        "option_label_OPTIONAL_ENCUMBRANCE",
-        "option_entry_cycler",
-        {labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "on"}
-    )
+    -- deprecating
+    -- OptionsManager.registerOption2(
+    --     "OPTIONAL_ENCUMBRANCE",
+    --     false,
+    --     "option_header_adnd_options",
+    --     "option_label_OPTIONAL_ENCUMBRANCE",
+    --     "option_entry_cycler",
+    --     {labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "on"}
+    -- )
 
     -- Doesn't exist in 2e ruleset, needs to be removed there
     -- OptionsManager.registerOption2("OPTIONAL_ENCUMBRANCE_COIN", false, "option_header_adnd_options", "option_label_OPTIONAL_ENCUMBRANCE_COIN", "option_entry_cycler",
     --   { labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
 
     -- Changed to a threshold to account for differences between 1e and OSRIC
-    OptionsManager.registerOption2(
-        "HouseRule_DeathsDoor",
-        false,
-        "option_header_adnd_options",
-        "option_label_ADND_DEATHSDOOR",
-        "option_entry_cycler",
-        {
-            labels = "option_val_zero|option_val_minus_three",
-            values = "exactlyZero|zeroToMinusThree",
-            baselabel = "option_val_zero_or_less",
-            baseval = "zeroOrLess",
-            default = "zeroOrLess"
-        }
-    )
+    -- OptionsManager.registerOption2(
+    --     "HouseRule_DeathsDoor",
+    --     false,
+    --     "option_header_adnd_options",
+    --     "option_label_ADND_DEATHSDOOR",
+    --     "option_entry_cycler",
+    --     {
+    --         labels = "option_val_zero|option_val_minus_three",
+    --         values = "exactlyZero|zeroToMinusThree",
+    --         baselabel = "option_val_zero_or_less",
+    --         baseval = "zeroOrLess",
+    --         default = "zeroOrLess"
+    --     }
+    -- )
 
     -- size mods don't exist in 1e or OSRIC
     -- deprecate option and functions
@@ -203,21 +203,21 @@ function registerOptions()
     -- OptionsManager.registerOption2("HouseRule_InitEachRound", false, "option_header_houserule", "option_label_HOUSE_RULE_INIT_EACH_ROUND", "option_entry_cycler",
     --     { labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "on" });
 
-    -- Set this to deprecating/use options and house rules extension instead
-    OptionsManager.registerOption2(
-        "HouseRule_CRIT_TYPE",
-        false,
-        "option_header_houserule",
-        "option_label_HR_CRIT",
-        "option_entry_cycler",
-        {
-            labels = "option_val_hr_crit_maxdmg|option_val_hr_crit_timestwo|option_val_hr_crit_doubledice",
-            values = "max|timestwo|doubledice",
-            baselabel = "option_val_hr_crit_none",
-            baseval = "none",
-            default = "none"
-        }
-    )
+    -- deprecating
+    -- OptionsManager.registerOption2(
+    --     "HouseRule_CRIT_TYPE",
+    --     false,
+    --     "option_header_houserule",
+    --     "option_label_HR_CRIT",
+    --     "option_entry_cycler",
+    --     {
+    --         labels = "option_val_hr_crit_maxdmg|option_val_hr_crit_timestwo|option_val_hr_crit_doubledice",
+    --         values = "max|timestwo|doubledice",
+    --         baselabel = "option_val_hr_crit_none",
+    --         baseval = "none",
+    --         default = "none"
+    --     }
+    -- )
 
     -- this is not a option in AD&D 2e?
     -- OptionsManager.registerOption2("HouseRule_ASCENDING_AC", false, "option_header_houserule", "option_label_HR_ASENDING_AC", "option_entry_cycler",

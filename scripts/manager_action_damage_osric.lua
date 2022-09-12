@@ -428,19 +428,8 @@ function applyDamageNew(rSource, rTarget, bSecret, sDamage, nTotal, aDice)
     local rDamageOutput = ActionDamage.decodeDamageText(nTotal, sDamage)
 
     -- changing death's door options, since it always exists in 1e
-    local nDeathDoorThreshold = 0
+    local nDeathDoorThreshold = 9
     local nDEAD_AT = -10
-
-    local sOptHouseRuleDeathsDoor = OptionsManager.getOption("HouseRule_DeathsDoor")
-
-    if sOptHouseRuleDeathsDoor == "exactlyZero" then
-        nDeathDoorThreshold = 0
-    elseif sOptHouseRuleDeathsDoor == "zeroToMinusThree" then
-        nDeathDoorThreshold = 3
-    else
-        -- 9 because -10 = dead
-        nDeathDoorThreshold = 9
-    end
 
     -- Healing
     if rDamageOutput.sType == "recovery" then

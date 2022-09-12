@@ -28,19 +28,12 @@ end
 function handleApplyInitNew(msgOOB)
 	local rSource = ActorManager.resolveActor(msgOOB.sSourceNode)
 	local nTotal = tonumber(msgOOB.nTotal) or 0
-
-	local bOsricInitiativeSwap = (OptionsManager.getOption("useOsricInitiativeSwap") == "on")
 	local bOptAutoNpcInitiative = (OptionsManager.getOption("autoNpcInitiative") == "on")
 
 	-- npcs will have already rolled automatically, apply pc init roll to either the pcs or the npcs
 	if bOptAutoNpcInitiative then
 		if ActorManager.isPC(rSource) then
-			-- OSRIC initiative swap
-			if bOsricInitiativeSwap then
-				CombatManagerOsric.applyInitResultToAllNPCs(nTotal)
-			else
-				CombatManagerOsric.applyInitResultToAllPCs(nTotal)
-			end
+			CombatManagerOsric.applyInitResultToAllNPCs(nTotal)
 		end
 	else
 		if ActorManager.isPC(rSource) then
@@ -52,10 +45,8 @@ function handleApplyInitNew(msgOOB)
 		end
 
 		-- OSRIC initiative swap
-		if bOsricInitiativeSwap then
-			CombatManagerOsric.applyInitResultToAllPCs(NPC_LASTINIT)
-			CombatManagerOsric.applyInitResultToAllNPCs(PC_LASTINIT)
-		end
+		CombatManagerOsric.applyInitResultToAllPCs(NPC_LASTINIT)
+		CombatManagerOsric.applyInitResultToAllNPCs(PC_LASTINIT)
 	end
 end
 
@@ -78,6 +69,6 @@ function delayActor(nodeChar)
 		local sName = DB.getValue(nodeChar, "name", "")
 		sChatText = sName .. " tried to delay when it wasn't their turn."
 
-		ChatManager.Message(sChatText, false);
+		ChatManager.Message(sChatText, false)
 	end
 end

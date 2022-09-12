@@ -192,20 +192,7 @@ function createTHACOMatrix()
 				fightsAsHdLevel = 20
 			end
 
-			local bUseOsricMonsterMatrix = (OptionsManager.getOption("useOsricMonsterMatrix") == "on")
-			Debug.console("213", "fightsAsHdLevel", fightsAsHdLevel, "bUseOsricMonsterMatrix", bUseOsricMonsterMatrix)
-
-			if bUseOsricMonsterMatrix then
-				aMatrixRolls = DataCommonADND.aOsricToHitMatrix[fightsAsHdLevel]
-			else
-				aMatrixRolls = DataCommonADND.aMatrix[sHitDice]
-
-				-- for hit dice above 16, use 16
-				if (aMatrixRolls == nil) then
-					sHitDice = "16"
-					aMatrixRolls = DataCommonADND.aMatrix[sHitDice]
-				end
-			end
+			aMatrixRolls = DataCommonADND.aOsricToHitMatrix[fightsAsHdLevel]
 		end
 	end
 
@@ -217,7 +204,7 @@ function createTHACOMatrix()
 		if bUseMatrix then
 			if bisPC then
 				nTHAC = DB.getValue(node, "combat.matrix.thac" .. i, 20)
-			else --if not bisPC and #aMatrixRolls > 0 then
+			else
 				-- math.abs(i-11), this table is reverse of how we display the matrix
 				-- so we start at the end instead of at the front by taking I - 11 then get the absolute value of it.
 				nTHAC = aMatrixRolls[math.abs(i - 11)]

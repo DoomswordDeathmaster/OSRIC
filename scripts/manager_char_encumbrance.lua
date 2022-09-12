@@ -3,7 +3,7 @@
 -- attribution and copyright information.
 --
 
--- ***** copied from CoreRpg (because it wasn't working otherwise) to remove the options of turning off coin encumbrance, todo: decide if it's worth it in order to remove the option to turn off
+-- ***** copied from CoreRpg (because it wasn't working otherwise) to remove the options of turning off coin encumbrance
 local _tStandardSupportedRulesets = {
 	"CoreRPG",
 	"3.5E",
@@ -87,15 +87,15 @@ function performInit()
 			return
 		end
 
-		-- todo: comment out to deprecate, if desired
-		OptionsManager.registerOption2(
-			"CURR",
-			false,
-			"option_header_houserule",
-			"option_label_CURR",
-			"option_entry_cycler",
-			{labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "on"}
-		)
+		-- deprecate turning off coin encumbrance
+		-- OptionsManager.registerOption2(
+		-- 	"CURR",
+		-- 	false,
+		-- 	"option_header_houserule",
+		-- 	"option_label_CURR",
+		-- 	"option_entry_cycler",
+		-- 	{labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "on"}
+		-- )
 
 		if Session.IsHost then
 			OptionsManager.registerCallback("CURR", CharEncumbranceManager.onCurrencyOptionUpdate)

@@ -108,21 +108,21 @@ function registerOptions()
         }
     )
 
-    -- Set this to deprecating/use options and house rules extension instead
-    OptionsManager.registerOption2(
-        "HRFC",
-        false,
-        "option_header_houserule",
-        "option_label_HRFC",
-        "option_entry_cycler",
-        {
-            labels = "option_val_fumbleandcrit|option_val_fumble|option_val_crit",
-            values = "both|fumble|criticalhit",
-            baselabel = "option_val_off",
-            baseval = "off",
-            default = "off"
-        }
-    )
+    -- deprecating
+    -- OptionsManager.registerOption2(
+    --     "HRFC",
+    --     false,
+    --     "option_header_houserule",
+    --     "option_label_HRFC",
+    --     "option_entry_cycler",
+    --     {
+    --         labels = "option_val_fumbleandcrit|option_val_fumble|option_val_crit",
+    --         values = "both|fumble|criticalhit",
+    --         baselabel = "option_val_off",
+    --         baseval = "off",
+    --         default = "off"
+    --     }
+    -- )
 
     if Interface.getVersion() < 4 then
         OptionsManager.registerOption2(

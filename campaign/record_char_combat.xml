@@ -3,14 +3,15 @@
 	<windowclass name="combat_mini_section" merge="join" insertbefore="combat_thaco_matrix">
 		<sheetdata>
 			<button_charinitdelay name="initiativedelay" merge="replace">
-				<script>
+				<!-- deprecating -->
+				<!-- <script>
 				function onInit()
 					if OptionsManager.getOption("useOsricInitiativeDelay") == "off" then
 						setVisible(false);
 						window.label_initdelaytop.setVisible(false);
 					end
 				end
-				</script>
+				</script> -->
 				<anchored height="25" width="20">
 					<top offset="15" />
 					<left parent="surprise_total_roll" anchor="right" relation="relative" offset="15" />

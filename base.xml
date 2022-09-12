@@ -7,9 +7,9 @@
 
   <description>
     <displayname>OSRIC</displayname>
-    <displayversion>1E/OSRIC</displayversion>
-    <text>1E/OSRIC ruleset</text>
-    <author>Doomsword</author>
+    <!-- <displayversion>OSRIC</displayversion> -->
+    <text>OSRIC ruleset</text>
+    <author>Doomsword, upon the shoulders of Celestian's 2E</author>
     <website>https://www.fantasygrounds.com</website>
   </description>
 
@@ -22,53 +22,31 @@
     <acceptfrom ruleset="CoreRPG" />
   </importinfo>
 
+  <includefile source="campaign/record_char_combat.xml" />
+  <includefile source="campaign/record_char_main.xml" />
+  <includefile source="campaign/record_class.xml" />
+  <includefile source="campaign/record_npc.xml" />
+  <includefile source="campaign/template_campaign.xml" />
+  <includefile source="campaign/template_char_osric.xml" />
+  <includefile source="campaign/template_cta.xml" />
+  <includefile source="campaign/template_npc.xml" />
+  <includefile source="cta/cta_host.xml" />
+  <includefile source="graphics/graphics_frames_adnd.xml" />
+  <includefile source="graphics/graphics_icons.xml" />
 
-<!-- <root version="3.0">
-  <properties>
-    <name>AD&amp;D Options and House Rules</name>
-    <version>1.3</version>
-    <author>Doomsword</author>
-    <description>
-      <text>AD&amp;D Options and House Rules</text>
-      <author>Doomsword</author>
-    </description>
-    <loadorder>99</loadorder>
-    <ruleset>
-      <name>2E</name>
-    </ruleset>
-  </properties>
+  <!-- High-level scripts -->
+  <script name="DataCommonOsric" file="scripts/data_common_osric.lua" />
+  <script name="Options5E" file="scripts/data_options_5e.lua" />
+  <script name="OptionsADND" file="scripts/data_options_adnd.lua" />
+  <!-- <script name="DataOptionsOsric" file="scripts/data_options_osric.lua" /> -->
+  <script name="ActionDamageManagerOsric" file="scripts/manager_action_damage_osric.lua" />
+  <script name="ActionInitManagerOsric" file="scripts/manager_action_init_osric.lua" />
+  <script name="ActionSurpriseManagerOsric" file="scripts/manager_action_surprise_osric.lua" />
+  <script name="ActorHealthManagerOsric" file="scripts/manager_actor_health_osric.lua" />
+  <script name="CharEncumbranceManager" file="scripts/manager_char_encumbrance.lua" />
+  <script name="CombatManagerOsric" file="scripts/manager_combat_osric.lua" />
+  <script name="FightsSavesAsManager" file="scripts/manager_fights_saves_as.lua" />
+  <script name="NpcClickChooser" file="campaign/scripts/npc_click_chooser.lua" />
 
-  <announcement text="AD&amp;D Options and House Rules\rby Doomsword and including Celestian's 1E properties with enhancements.\rFor issues or feature requests, find me on the Discord." font="emotefont" icon="doomsword_icon" />
-
-  <base> -->
-    <includefile source="campaign/record_char_combat.xml" />
-    <includefile source="campaign/record_char_main.xml" />
-    <includefile source="campaign/record_class.xml" />
-    <includefile source="campaign/record_npc.xml" />
-    <includefile source="campaign/template_char_osric.xml" />
-    <includefile source="campaign/template_cta.xml" />
-    <includefile source="campaign/template_npc.xml" />
-    <includefile source="campaign/template_campaign.xml" />
-    <includefile source="cta/cta_host.xml" />
-    <includefile source="graphics/graphics_frames_adnd.xml" />
-    <includefile source="graphics/graphics_icons.xml" />
-
-    <!-- High-level scripts -->
-    <script name="DataCommonOsric" file="scripts/data_common_osric.lua" />
-    <script name="Options5E" file="scripts/data_options_5e.lua" />
-    <script name="OptionsADND" file="scripts/data_options_adnd.lua" />
-    <script name="ActionInitManagerOsric" file="scripts/manager_action_init_osric.lua" />
-    <script name="ActionSurpriseManagerOsric" file="scripts/manager_action_surprise_osric.lua" />
-    <script name="OptionsOsric" file="scripts/data_options_osric.lua" />
-    <script name="CombatManagerOsric" file="scripts/manager_combat_osric.lua" />
-    <script name="FightsSavesAsManager" file="scripts/manager_fights_saves_as.lua" />
-    <script name="NpcClickChooser" file="campaign/scripts/npc_click_chooser.lua" />
-    <script name="CharEncumbranceManager" file="scripts/manager_char_encumbrance.lua" />
-    <script name="ActorHealthManagerOsric" file="scripts/manager_actor_health_osric.lua" />
-    <script name="ActionDamageOsric" file="scripts/manager_action_damage_osric.lua" />
-
-    <!-- <includefile source="strings/strings_adnd.xml" /> -->
-    <includefile source="strings/strings_osric.xml" />
-    <!-- <includefile source="strings/strings_utility.xml" /> -->
-  <!-- </base> -->
+  <includefile source="strings/strings_osric.xml" />
 </root>
