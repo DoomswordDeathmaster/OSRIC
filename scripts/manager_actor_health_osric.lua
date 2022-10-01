@@ -1,9 +1,9 @@
 function onInit()
-    ActorHealthManager.getWoundPercent = getWoundPercentNew
+    ActorHealthManager.getWoundPercent = getWoundPercentOsric
 end
 
-function getWoundPercentNew(rActor)
-    --Debug.console("manager_actor_helth_osric.lua 7", "getWoundPercentNew")
+function getWoundPercentOsric(rActor)
+    --Debug.console("manager_actor_helth_osric.lua 7", "getWoundPercentOsric")
     -- local rActor = ActorManager.resolveActor(node);
     -- local node = ActorManager.getCreatureNode(rActor);
     local sNodeType, node = ActorManager.getTypeAndNode(rActor)

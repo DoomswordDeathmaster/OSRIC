@@ -249,7 +249,7 @@ wSidebarWindow = nil
 
 function registerWindowSidebar(wWindow)
     if not wSidebarWindow then
-        wSidebarWindow = wWindow
+        wSidebarWindow = wWindowF
         updateMenuStyle()
     end
 end

@@ -1,15 +1,15 @@
 function onInit()
-    --ActionSurprise.getRoll = getRollNew
-    ActionSurprise.performRoll = performRollNew
+    --ActionSurprise.getRoll = getRollOsric
+    ActionSurprise.performRoll = performRollOsric
 end
 
-function performRollNew(draginfo, rActor, nTargetDC, bSecretRoll)
-    local rRoll = getRollNew(rActor, nTargetDC, bSecretRoll)
+function performRollOsric(draginfo, rActor, nTargetDC, bSecretRoll)
+    local rRoll = getRollOsric(rActor, nTargetDC, bSecretRoll)
 
     ActionsManager.performAction(draginfo, rActor, rRoll)
 end
 
-function getRollNew(rActor, nTargetDC, bSecretRoll)
+function getRollOsric(rActor, nTargetDC, bSecretRoll)
     DataCommonADND.aDefaultSurpriseDice = {"d6"}
 
     local rRoll = {}

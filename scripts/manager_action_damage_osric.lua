@@ -1,11 +1,11 @@
 function onInit()
     Debug.console("manager_action_damage_osric.lua", "init")
-    ActionDamage.applyDamage = applyDamageNew
-    ActionDamage.modDamage = modDamageNew
+    ActionDamage.applyDamage = applyDamageOsric
+    ActionDamage.modDamage = modDamageOsric
 end
 
 -- brought this in to later remove critical options
-function modDamageNew(rSource, rTarget, rRoll)
+function modDamageOsric(rSource, rTarget, rRoll)
     ActionDamage.decodeDamageTypes(rRoll)
     CombatManager2.addRightClickDiceToClauses(rRoll)
 
@@ -390,7 +390,7 @@ function modDamageNew(rSource, rTarget, rRoll)
 end
 
 -- brought this is to handle Death's Door changes, TODO: apply new Death's Door Threshold options
-function applyDamageNew(rSource, rTarget, bSecret, sDamage, nTotal, aDice)
+function applyDamageOsric(rSource, rTarget, bSecret, sDamage, nTotal, aDice)
     Debug.console("manager_action_damage_osric.lua", "applyDamageNew", "aDice", aDice)
     -- Get health fields
     local sTargetType, nodeTarget = ActorManager.getTypeAndNode(rTarget)

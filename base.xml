@@ -27,7 +27,7 @@
   <includefile source="campaign/record_class.xml" />
   <includefile source="campaign/record_npc.xml" />
   <includefile source="campaign/template_campaign.xml" />
-  <includefile source="campaign/template_char_osric.xml" />
+  <!-- <includefile source="campaign/template_char_osric.xml" /> -->
   <includefile source="campaign/template_cta.xml" />
   <includefile source="campaign/template_npc.xml" />
   <includefile source="cta/cta_host.xml" />

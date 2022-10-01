@@ -9,37 +9,37 @@ OOB_MSGTYPE_CHANGEINIT = "changeinitiative"
 
 function onInit()
     rollEntryInitOrig = CombatManagerADND.rollEntryInit
-    CombatManagerADND.rollEntryInit = rollEntryInitNew
-    CombatManager2.rollEntryInit = rollEntryInitNew
+    CombatManagerADND.rollEntryInit = rollEntryInitOsric
+    CombatManager2.rollEntryInit = rollEntryInitOsric
 
-    CombatManagerADND.rollRandomInit = rollRandomInitNew
-    CombatManager2.rollRandomInit = rollRandomInitNew
+    CombatManagerADND.rollRandomInit = rollRandomInitOsric
+    CombatManager2.rollRandomInit = rollRandomInitOsric
 
     getACHitFromMatrixForNPCOrig = CombatManagerADND.getACHitFromMatrixForNPC
-    CombatManagerADND.getACHitFromMatrixForNPC = getACHitFromMatrixForNPCNew
+    CombatManagerADND.getACHitFromMatrixForNPC = getACHitFromMatrixForNPCOsric
 
-    CombatManagerADND.handleInitiativeChange = handleInitiativeChangeNew
-    OOBManager.registerOOBMsgHandler(OOB_MSGTYPE_CHANGEINIT, handleInitiativeChangeNew)
+    CombatManagerADND.handleInitiativeChange = handleInitiativeChangeOsric
+    OOBManager.registerOOBMsgHandler(OOB_MSGTYPE_CHANGEINIT, handleInitiativeChangeOsric)
 
     --
-    CombatManager.setCustomCombatReset(resetInitNew)
-    CombatManager.setCustomRoundStart(onRoundStartNew)
+    CombatManager.setCustomCombatReset(resetInitOsric)
+    CombatManager.setCustomRoundStart(onRoundStartOsric)
 end
 
-function rollRandomInitNew(nMod)
+function rollRandomInitOsric(nMod, bADV)
     local nInitResult = math.random(DataCommonADND.nDefaultInitiativeDice)
     Debug.console("rollrandominitnew 39", nInitResult)
     return nInitResult
 end
 
-function rollEntryInitNew(nodeEntry)
+function rollEntryInitOsric(nodeEntry)
     Debug.console("nodeEntry", nodeEntry)
 
     if not nodeEntry then
         return
     end
 
-    Debug.console("rollEntryInitNew")
+    Debug.console("rollEntryInitOsric")
 
     -- PC/NPC init
     local sClass, sRecord = DB.getValue(nodeEntry, "link", "", "")
@@ -61,7 +61,7 @@ function rollEntryInitNew(nodeEntry)
         -- if grouping involving pcs is on
         -- if bOptPCVNPCINIT then --or (sOptInitGrouping == "pc" or sOptInitGrouping == "both") then
         -- roll without mods
-        nInitResult = rollRandomInitNew(0)
+        nInitResult = rollRandomInitOsric(0)
         -- group init - apply init result to remaining PCs
         applyInitResultToAllPCs(nInitResult)
         -- set last init for comparison for ties and swapping
@@ -76,7 +76,7 @@ function rollEntryInitNew(nodeEntry)
         -- if grouping involving npcs is on
         -- if bOptPCVNPCINIT then --or (sOptInitGrouping == "npc" or sOptInitGrouping == "both") then
         -- roll without mods
-        nInitResult = rollRandomInitNew(0)
+        nInitResult = rollRandomInitOsric(0)
         -- group init - apply init result to remaining NPCs
         applyInitResultToAllNPCs(nInitResult)
         -- set last init for comparison for ties and swapping
@@ -128,7 +128,7 @@ function applyInitResultToAllNPCs(nInitResult)
     end
 end
 
-function handleInitiativeChangeNew(msgOOB)
+function handleInitiativeChangeOsric(msgOOB)
     local nodeCT = DB.findNode(msgOOB.sCTRecord)
 
     if nodeCT then
@@ -138,7 +138,7 @@ function handleInitiativeChangeNew(msgOOB)
 end
 
 -- 1e/OSRIC alwaysd does this
-function resetInitNew()
+function resetInitOsric()
     -- set last init results to 0
     PC_LASTINIT = 0
     NPC_LASTINIT = 0
@@ -148,21 +148,37 @@ function resetInitNew()
     end
 end
 
-function onRoundStartNew(nCurrent)
-    local bOptAutoNpcInitiative = (OptionsManager.getOption("autoNpcInitiative") == "on")
+function onRoundStartOsric(nCurrent)
+    local bOptOptionsAndHouseRulesLoaded
+    local extensions = Extension.getExtensions()
 
-    PC_LASTINIT = 0
-    NPC_LASTINIT = 0
-
-    --if bOptRoundStartResetInit then
-    for _, nodeCT in pairs(CombatManager.getCombatantNodes()) do
-        resetCombatantInit(nodeCT)
+    for _, extension in ipairs(extensions) do
+        Debug.console("ExtensionList extension", Extension.getExtensionInfo(extension).name)
+        
+        if Extension.getExtensionInfo(extension).name == "AD&D Options and House Rules" then
+            bOptOptionsAndHouseRulesLoaded = true
+        end
+        
+        Debug.console("bOptOptionsAndHouseRulesLoaded", bOptOptionsAndHouseRulesLoaded)
     end
-    --end
 
-    if bOptAutoNpcInitiative then
-        local nInitResult = rollRandomInitNew(0)
-        applyInitResultToAllPCs(nInitResult)
+    if not bOptOptionsAndHouseRulesLoaded then
+        Debug.console("onRoundStartOsric")
+        local bOptAutoNpcInitiative = (OptionsManager.getOption("autoNpcInitiative") == "on")
+
+        PC_LASTINIT = 0
+        NPC_LASTINIT = 0
+
+        --if bOptRoundStartResetInit then
+        for _, nodeCT in pairs(CombatManager.getCombatantNodes()) do
+            resetCombatantInit(nodeCT)
+        end
+        --end
+
+        if bOptAutoNpcInitiative then
+            local nInitResult = rollRandomInitOsric(0)
+            applyInitResultToAllPCs(nInitResult)
+        end
     end
 end
 
@@ -178,7 +194,7 @@ function resetCombatantInit(nodeCT)
 end
 
 -- return the Best ac hit from a roll for this NPC
-function getACHitFromMatrixForNPCNew(nodeCT, nRoll)
+function getACHitFromMatrixForNPCOsric(nodeCT, nRoll)
     --Debug.console(nodeCT, sHitDice, aMatrixRolls);
 
     local sClass, nodePath = DB.getValue(nodeCT, "sourcelink")
@@ -308,7 +324,7 @@ function getACHitFromMatrixForNPCNew(nodeCT, nRoll)
         aMatrixRolls = DataCommonADND.aOsricToHitMatrix[fightsAsHdLevel]
     end
 
-    --Debug.console("manager_combat_adnd_op_hr","getACHitFromMatrixForNPCNew","aMatrixRolls",aMatrixRolls);
+    --Debug.console("manager_combat_adnd_op_hr","getACHitFromMatrixForNPCOsric","aMatrixRolls",aMatrixRolls);
     local nACBase = 11
 
     if (DataCommonADND.coreVersion == "becmi") then

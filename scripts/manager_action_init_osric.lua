@@ -4,16 +4,16 @@ NPC_LASTINIT = 0
 OOB_MSGTYPE_APPLYINIT = "applyinit"
 
 function onInit()
-	ActionInit.getRoll = getRollNew
-	ActionInit.handleApplyInit = handleApplyInitNew
+	ActionInit.getRoll = getRollOsric
+	ActionInit.handleApplyInit = handleApplyInitOsric
 
-	OOBManager.registerOOBMsgHandler(OOB_MSGTYPE_APPLYINIT, handleApplyInitNew)
+	OOBManager.registerOOBMsgHandler(OOB_MSGTYPE_APPLYINIT, handleApplyInitOsric)
 end
 
 -- initiative without modifiers, from item entry in ct or init button on character
-function getRollNew(rActor, bSecretRoll, rItem)
+function getRollOsric(rActor, bSecretRoll, rItem)
 	local rRoll = {}
-	Debug.console("getRollNew")
+	Debug.console("getRollOsric")
 	rRoll.sType = "init"
 	rRoll.aDice = {"d" .. DataCommonADND.nDefaultInitiativeDice}
 
@@ -25,7 +25,7 @@ function getRollNew(rActor, bSecretRoll, rItem)
 	return rRoll
 end
 
-function handleApplyInitNew(msgOOB)
+function handleApplyInitOsric(msgOOB)
 	local rSource = ActorManager.resolveActor(msgOOB.sSourceNode)
 	local nTotal = tonumber(msgOOB.nTotal) or 0
 	local bOptAutoNpcInitiative = (OptionsManager.getOption("autoNpcInitiative") == "on")
