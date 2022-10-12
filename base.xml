@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <root version="3.0" release="35" logo="logo.png">
   <announcement text="OSRIC \r(c) Stuart Marshall" font="emotefont" icon="rulesetlogo_DungeonClassic" />
-  <announcement text="OSRIC/1E v2022.09.10 For Fantasy Grounds\r--by Doomsword" font="emotefont" icon="celestian" />
+  <announcement text="OSRIC/1E v2022.09.10 For Fantasy Grounds\r--by Doomsword" font="emotefont" icon="doomsword_icon" />
 
   <!-- Attributes -->
 
@@ -47,6 +47,7 @@
   <script name="CombatManagerOsric" file="scripts/manager_combat_osric.lua" />
   <script name="FightsSavesAsManager" file="scripts/manager_fights_saves_as.lua" />
   <script name="NpcClickChooser" file="campaign/scripts/npc_click_chooser.lua" />
+  <!-- <script name="MenuManager" file="scripts/manager_menu_adnd.lua" /> -->
 
   <includefile source="strings/strings_osric.xml" />
 </root>

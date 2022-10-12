@@ -60,21 +60,13 @@ Forced defaults
 
 check if 2e base ruleset removes effects when wounds manually changed
 
-add an ability check option of 3d6 to AD&D Options and House Rules
 
+
+TODO:  add an ability check option of 3d6 to AD&D Options and House Rules
+TODO:  figure out why both menu types are showing :(
 
 
 IDEA: maybe we create an entirely new extension and pop a window on Core 1e that tells people that it's no longer being developed
-
-
-
-
-ROBLOX - WRITE A NOTE
-	
-	
-
-
-
 
 
 For anyone playing 1e/OSRIC and/or anyone otherwise interested, this is gonna be kind of long but...
