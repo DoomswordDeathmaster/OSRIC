@@ -101,7 +101,7 @@ function createTHACOMatrix()
 		fightsAsClass = fightsAsClass:gsub("%s+", "")
 		fightsAsHdLevel = DB.getValue(node, "fights_as_hd_level")
 
-		Debug.console("111", "npcHitDice", sHitDice, "fightsAsClass", fightsAsClass, "fightsAsHdLevel", fightsAsHdLevel)
+		--Debug.console("111", "npcHitDice", sHitDice, "fightsAsClass", fightsAsClass, "fightsAsHdLevel", fightsAsHdLevel)
 
 		-- fights_as_hd_level not set
 		if (fightsAsHdLevel == nil or fightsAsHdLevel == 0) then
@@ -128,8 +128,8 @@ function createTHACOMatrix()
 			end
 		end
 
-		Debug.console("121", "fightsAsClass", fightsAsClass)
-		Debug.console("122", "fightsAsHdLevel", fightsAsHdLevel, "sHitDice", sHitDice)
+		--Debug.console("121", "fightsAsClass", fightsAsClass)
+		--Debug.console("122", "fightsAsHdLevel", fightsAsHdLevel, "sHitDice", sHitDice)
 
 		if (fightsAsClass ~= "") then
 			if (fightsAsClass == "Assassin") then
@@ -261,7 +261,7 @@ end
 
 -- update combat_mini_thaco_matrix from db values
 function update()
-	Debug.console("char_matrix_thaco.lua:130", "updating combat_mini_thaco_matrix")
+	--Debug.console("char_matrix_thaco.lua:130", "updating combat_mini_thaco_matrix")
 	local node = getDatabaseNode()
 	local bisPC = (ActorManager.isPC(node))
 	local bUseMatrix = (DataCommonADND.coreVersion ~= "2e")

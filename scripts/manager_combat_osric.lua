@@ -28,18 +28,19 @@ end
 
 function rollRandomInitOsric(nMod, bADV)
     local nInitResult = math.random(DataCommonADND.nDefaultInitiativeDice)
-    Debug.console("rollrandominitnew 39", nInitResult)
+    --Debug.console("rollrandominitnew 39", nInitResult)
     return nInitResult
 end
 
+--
 function rollEntryInitOsric(nodeEntry)
-    Debug.console("nodeEntry", nodeEntry)
+    --Debug.console("nodeEntry", nodeEntry)
 
     if not nodeEntry then
         return
     end
 
-    Debug.console("rollEntryInitOsric")
+    --Debug.console("rollEntryInitOsric")
 
     -- PC/NPC init
     local sClass, sRecord = DB.getValue(nodeEntry, "link", "", "")
@@ -47,7 +48,7 @@ function rollEntryInitOsric(nodeEntry)
     -- it's a PC
     if sClass == "charsheet" then
         -- it's an NPC
-        Debug.console("PC Init")
+        --Debug.console("PC Init")
         local nodeChar = DB.findNode(sRecord)
         -- default PC initiative totals to 0
         local nInitPC = 0
@@ -64,6 +65,11 @@ function rollEntryInitOsric(nodeEntry)
         nInitResult = rollRandomInitOsric(0)
         -- group init - apply init result to remaining PCs
         applyInitResultToAllPCs(nInitResult)
+
+        -- deliver init message for clarity
+        -- todo: make better
+        -- ChatManager.Message("NPC roll of " .. nInitResult .. " applied to all PCs (OSRIC initiative swap)", false)
+
         -- set last init for comparison for ties and swapping
         PC_LASTINIT = nInitResult
 
@@ -71,7 +77,7 @@ function rollEntryInitOsric(nodeEntry)
         DB.setValue(nodeEntry, "initresult", "number", nInitResult)
         DB.setValue(nodeEntry, "initresult_d6", "number", nInitResult)
     else
-        Debug.console("NPC Init")
+        --Debug.console("NPC Init")
         -- it's an npc
         -- if grouping involving npcs is on
         -- if bOptPCVNPCINIT then --or (sOptInitGrouping == "npc" or sOptInitGrouping == "both") then
@@ -85,45 +91,97 @@ function rollEntryInitOsric(nodeEntry)
         local nTotal = DB.getValue(nodeEntry, "initiative.total", 0)
     end
 
-    Debug.console("SWAP!")
+    --Debug.console("SWAP!")
     --if bOptPCVNPCINIT then --or (sOptInitGrouping ~= "neither") then
     applyInitResultToAllPCs(NPC_LASTINIT)
+
+    -- deliver init message for clarity
+    -- todo: make better
+    -- ChatManager.Message("NPC roll of " .. nInitResult .. " applied to all PCs (OSRIC initiative swap)", false)
+
     applyInitResultToAllNPCs(PC_LASTINIT)
+
+    -- deliver init message for clarity
+    -- todo: make better
+    -- ChatManager.Message("PC roll of " .. nInitResult .. " applied to all PCs (OSRIC initiative swap)", false)
 end
 
 function applyInitResultToAllPCs(nInitResult)
+    --Debug.console("applyInitResultToAllPCs", nInitResult)
     -- group init - apply init result to all PCs
-    for _, v in pairs(CombatManager.getCombatantNodes()) do
-        if DB.getValue(v, "friendfoe") == "friend" then
+    for _, nodeEntry in pairs(CombatManager.getCombatantNodes()) do
+        if DB.getValue(nodeEntry, "friendfoe") == "friend" then
             -- just set both of these values regardless of initiative die used, so we don't have to mod other places where initresult is displayed
-            DB.setValue(v, "initresult", "number", nInitResult)
-            DB.setValue(v, "initresult_d6", "number", nInitResult)
+            DB.setValue(nodeEntry, "initresult", "number", nInitResult)
+            DB.setValue(nodeEntry, "initresult_d6", "number", nInitResult)
             -- set init rolled
-            DB.setValue(v, "initrolled", "number", 1)
+            DB.setValue(nodeEntry, "initrolled", "number", 1)
         end
     end
 end
 
 function applyInitResultToAllNPCs(nInitResult)
     -- group init - apply init result to remaining NPCs
-    for _, v in pairs(CombatManager.getCombatantNodes()) do
-        if DB.getValue(v, "friendfoe") ~= "friend" then
-            -- basically just zombies so that they go last
-            local nInit = DB.getValue(v, "init", 0)
+    -- for _, v in pairs(CombatManager.getCombatantNodes()) do
+    --     if DB.getValue(v, "friendfoe") ~= "friend" then
+    --         -- basically just zombies so that they go last
+    --         local nInit = DB.getValue(v, "init", 0)
 
-            if nInit == 99 then
-                -- just set both of these values regardless of initiative die used, so we don't have to mod other places where initresult is displayed
-                DB.setValue(v, "initresult", "number", 10)
-                DB.setValue(v, "initresult_d6", "number", 10)
+    --         if nInit == 99 then
+    --             -- just set both of these values regardless of initiative die used, so we don't have to mod other places where initresult is displayed
+    --             DB.setValue(v, "initresult", "number", 10)
+    --             DB.setValue(v, "initresult_d6", "number", 10)
+    --         else
+    --             -- just set both of these values regardless of initiative die used, so we don't have to mod other places where initresult is displayed
+    --             DB.setValue(v, "initresult", "number", nInitResult)
+    --             DB.setValue(v, "initresult_d6", "number", nInitResult)
+    --         end
+
+    --         -- set init rolled
+    --         DB.setValue(v, "initrolled", "number", 1)
+    --         Debug.console("combat 254", v)
+    --     end
+    -- end
+    --Debug.console("applyInitResultToAllNPCs", nInitResult)
+    -- group init - apply init result to remaining NPCs
+    for _, nodeEntry in pairs(CombatManager.getCombatantNodes()) do
+        if DB.getValue(nodeEntry, "friendfoe") ~= "friend" then
+            -- reset nInitResult
+            nInitResult = nInitResult
+            -- get custom init value
+            -- default to 0 each iteration
+            local nCustomInit = 0
+            -- get actual value
+            nCustomInit = DB.getValue(nodeEntry, "init", 0)
+            -- new var for storing any new result
+            local nInitResultNew = 0
+
+            -- Override, TODO should figure out why OSRIC isn't initializing DataCommonADND.nDefaultInitiativeDice and not sure about why 2E is initializing as string
+            local initiativeDie = 6
+
+            --local bOptInitMods = (OptionsManager.getOption("initiativeModifiersAllow") == "on")
+            --local bOptInitSizeMods = (OptionsManager.getOption("OPTIONAL_INIT_SIZEMODS") == "on")
+            --local sOptInitGrouping = OptionsManager.getOption("initiativeGrouping")
+
+            -- modify init results for size or other custom init
+            -- higher than the max init die (zombies, etc)
+            if nCustomInit > initiativeDie then
+                -- init mods on, size mods on, and grouped init not involving npcs - add size mod to init roll
+                --elseif (bOptInitMods and bOptInitSizeMods) and (sOptInitGrouping ~= "both" and sOptInitGrouping ~= "npc") then
+                --	nInitResultNew = nInitResult + nCustomInit
+                -- just the init roll, including any weapon mods
+                nInitResultNew = nCustomInit
             else
-                -- just set both of these values regardless of initiative die used, so we don't have to mod other places where initresult is displayed
-                DB.setValue(v, "initresult", "number", nInitResult)
-                DB.setValue(v, "initresult_d6", "number", nInitResult)
+                nInitResultNew = nInitResult
             end
 
+            --Debug.console("applyInitResultToAllNPCs", "nInitResult", nInitResult, "nCustomInit", nCustomInit, "nInitResultNew", nInitResultNew)
+            --Debug.console("applyInitResultToAllNPCs", "nInitResult", nInitResult, "nCustomInit", nCustomInit)
+            -- just set both of these values regardless of initiative die used, so we don't have to mod other places where initresult is displayed
+            DB.setValue(nodeEntry, "initresult", "number", nInitResultNew)
+            DB.setValue(nodeEntry, "initresult_d6", "number", nInitResultNew)
             -- set init rolled
-            DB.setValue(v, "initrolled", "number", 1)
-            Debug.console("combat 254", v)
+            DB.setValue(nodeEntry, "initrolled", "number", 1)
         end
     end
 end
@@ -137,7 +195,7 @@ function handleInitiativeChangeOsric(msgOOB)
     end
 end
 
--- 1e/OSRIC alwaysd does this
+-- always an initiative reset
 function resetInitOsric()
     -- set last init results to 0
     PC_LASTINIT = 0
@@ -153,17 +211,17 @@ function onRoundStartOsric(nCurrent)
     local extensions = Extension.getExtensions()
 
     for _, extension in ipairs(extensions) do
-        Debug.console("ExtensionList extension", Extension.getExtensionInfo(extension).name)
-        
+        --Debug.console("ExtensionList extension", Extension.getExtensionInfo(extension).name)
+
         if Extension.getExtensionInfo(extension).name == "AD&D Options and House Rules" then
             bOptOptionsAndHouseRulesLoaded = true
         end
-        
-        Debug.console("bOptOptionsAndHouseRulesLoaded", bOptOptionsAndHouseRulesLoaded)
+
+        --Debug.console("bOptOptionsAndHouseRulesLoaded", bOptOptionsAndHouseRulesLoaded)
     end
 
     if not bOptOptionsAndHouseRulesLoaded then
-        Debug.console("onRoundStartOsric")
+        --Debug.console("onRoundStartOsric")
         local bOptAutoNpcInitiative = (OptionsManager.getOption("autoNpcInitiative") == "on")
 
         PC_LASTINIT = 0
@@ -178,6 +236,10 @@ function onRoundStartOsric(nCurrent)
         if bOptAutoNpcInitiative then
             local nInitResult = rollRandomInitOsric(0)
             applyInitResultToAllPCs(nInitResult)
+
+            -- deliver init message for clarity
+            -- todo: make better
+            -- ChatManager.Message("NPC roll of " .. nInitResult .. " applied to all PCs (OSRIC initiative swap)", false)
         end
     end
 end
@@ -217,10 +279,10 @@ function getACHitFromMatrixForNPCOsric(nodeCT, nRoll)
         nTotalACs = 20
     end
 
-    Debug.console("nodeNpc", nodeNPC)
+    --Debug.console("nodeNpc", nodeNPC)
     fightsAsClass = DB.getValue(nodeNPC, "fights_as")
 
-    Debug.console("fightsAs", DB.getValue(nodeNPC, "fights_as"))
+    --Debug.console("fightsAs", DB.getValue(nodeNPC, "fights_as"))
 
     if fightsAsClass ~= nil then
         fightsAsClass = string.gsub(fightsAsClass, "%s+", "")

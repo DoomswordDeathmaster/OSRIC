@@ -39,10 +39,15 @@ end
 ---
 function updateSurpriseScores()
 	local nodeChar = getDatabaseNode()
-	--local surpriseBase = 2
+	
+	-- hardcode to 2 if > 2
+    -- TODO: get these set correctly
+    -- set to 2 if nothing returned
+    local nSurpriseBase = DB.getValue(node, "surprise.base", 2)
 
-	-- surprise.base if set, 2 if not set
-	local nSurpriseBase = DB.getValue(nodeChar,"surprise.base",2);
+	if DB.getValue(nodeChar, "surprise.base" ,2) > 2 then
+		local nSurpriseBase = 2
+	end
 
 	-- no mods in 1e/OSRIC
 	local nMod = 0

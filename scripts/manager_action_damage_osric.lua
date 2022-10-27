@@ -1,5 +1,5 @@
 function onInit()
-    Debug.console("manager_action_damage_osric.lua", "init")
+    --Debug.console("manager_action_damage_osric.lua", "init")
     ActionDamage.applyDamage = applyDamageOsric
     ActionDamage.modDamage = modDamageOsric
 end
@@ -7,7 +7,7 @@ end
 -- brought this in to later remove critical options
 function modDamageOsric(rSource, rTarget, rRoll)
     ActionDamage.decodeDamageTypes(rRoll)
-    CombatManager2.addRightClickDiceToClauses(rRoll)
+    CombatManagerADND.addRightClickDiceToClauses(rRoll)
 
     -- Set up
     local aAddDesc = {}
@@ -391,7 +391,7 @@ end
 
 -- brought this is to handle Death's Door changes, TODO: apply new Death's Door Threshold options
 function applyDamageOsric(rSource, rTarget, bSecret, sDamage, nTotal, aDice)
-    Debug.console("manager_action_damage_osric.lua", "applyDamageNew", "aDice", aDice)
+    --Debug.console("manager_action_damage_osric.lua", "applyDamageNew", "aDice", aDice)
     -- Get health fields
     local sTargetType, nodeTarget = ActorManager.getTypeAndNode(rTarget)
 
@@ -909,7 +909,7 @@ function updatePcCondition(
     nAdjustedDamage)
     -- effects management
     --if sTargetType == "pc" then
-    Debug.console("manager_action_attack_osric.lua 897", "pc")
+    --Debug.console("manager_action_attack_osric.lua 897", "pc")
     -- ^^ was PC
     --local nDeathValue = (nTotalHP - nWounds) - nDmgBeyondTotalHp;
 
@@ -1065,7 +1065,7 @@ function updatePcCondition(
             nDeathSaveFail = 3
         end
     else
-        Debug.console("ongoing 1076")
+        --Debug.console("ongoing 1076")
         if nCurrentHp <= -9 then
             -- removing an effect here causes an error because we're going through a loop of effects where DMGO is called and if this one
             -- is removed it causes the for loop to crash
@@ -1085,7 +1085,7 @@ function updatePcCondition(
             end
         end
     end
-    Debug.console("1099")
+    --Debug.console("1099")
     -- doing this here, outside of the loop that causes an error, line 1083
     if EffectManager5E.hasEffect(rTarget, "Unconscious") and EffectManager5E.hasEffect(rTarget, "Dead") then
         -- remove unconscious

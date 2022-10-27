@@ -57,9 +57,9 @@ function updateForNode()
 end
 
 function onClickDown()
-	Debug.console(sControl)
-	Debug.console(sClass)
-	Debug.console(sRecord)
+	--Debug.console(sControl)
+	--Debug.console(sClass)
+	--Debug.console(sRecord)
 	Interface.openWindow(sPath, sClass)
 	return true
 end

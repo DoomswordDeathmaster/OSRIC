@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root>
+	<template name="number_charabilityscore2">
+		<basicnumber>
+			<anchored to="statstitle" position="insidetopleft"/>
+			<rollable />
+			<readonly />
+			<min>1</min>
+			<max>25</max>
+			<default>9</default>
+			<font>bold20</font>
+			<frame name="abilityscore_box" />
+
+			<script>
+                function onInit()
+                    rollable = false;
+                end
+			</script>
+			<script file="campaign/scripts/number_abilityscore.lua" />
+		</basicnumber>
+	</template>
+
+	<template name="label_titlechar">
+		<label>
+			<font>subwindowsmalltitle</font>
+			<center />
+			<script>
+                function onInit()
+                    setVisible(false);
+                end
+			</script>
+		</label>
+	</template>
+
+	<template name="label_titlechar_visible">
+		<label>
+			<font>subwindowsmalltitle</font>
+			<center />
+			<script>
+                function onInit()
+                    setVisible(true);
+                end
+			</script>
+		</label>
+	</template>
+</root>

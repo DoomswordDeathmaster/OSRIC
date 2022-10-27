@@ -15,7 +15,7 @@ remove kits (forced))
 make currency weight mandatory (forcing/removing)
 change label of auto npc initiative and switch to on/off only (forced)
 remove critical hit/fumble tables (forcing/removing)
-rename to AD&D 1e/OSRIC (forced)
+rename to OSRIC (forced)
 death's door thresholds
 	exactly 0 (AD&D)
 	0 thru -3 (AD&D)
@@ -49,6 +49,7 @@ Forced defaults
 	Always allow initiative ties
 	d6 initiative die
 	assign init based on character who rolled
+	OSRIC RAW has an init "swap", this does too
 	remove pc vs npc initiative
 	remove armor dp
 	remove all initiative mods
@@ -58,12 +59,37 @@ Forced defaults
 
 
 
+OSRIC RAW
+	Group all initiatives
+	Simultaneous initiative
+	d6 initiative die
+	Assign init based on character who rolled
+	OSRIC RAW has an init "swap", this does too
+	No initiative mods or surprise mods and proper surprise checks
+	Reset initiative every round, with the possibility to auto-roll for NPCs or both NPCs and PCs
+	Set initiative range 0-10 to approximate segments and handle creatures who go last (segment 10) in a round
+	Use attack and save matrices for classed NPCs, from OSRIC
+	Allow Delay, puts NPC or PC at the back of the stack
+	No ability checks
+	Encumbrance and coin encumbrance mandatory
+	Death's Door, with a 0-9 threshold
+
+
+
+
+
 check if 2e base ruleset removes effects when wounds manually changed
 
 
 
 TODO:  add an ability check option of 3d6 to AD&D Options and House Rules
 TODO:  figure out why both menu types are showing :(
+TODO:  fix init delay
+TODO:  fix npc rolling and applying to pcs (works from DM roll)
+TODO:  Add auto roll all on round start option
+TODO:  remove ability modifiers
+TODO:  Decide how to handle any relevant options and where to put them in the options list
+Compare to changes made in ADD OP HR and TEST EVERYTHING
 
 
 IDEA: maybe we create an entirely new extension and pop a window on Core 1e that tells people that it's no longer being developed

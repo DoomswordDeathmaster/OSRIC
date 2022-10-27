@@ -25,8 +25,10 @@ function getRollOsric(rActor, nTargetDC, bSecretRoll)
     rRoll.aDice = aDice
 
     if (nTargetDC == nil) then
-        local node = CombatManagerADND.getCTFromActor(rActor)
-        nTargetDC = getSurpriseTarget(node)
+        -- local node = CombatManagerADND.getCTFromActor(rActor)
+        -- nTargetDC = getSurpriseTarget(node)
+        local nodeCT = ActorManager.getCTNode(rActor);
+    	nTargetDC = getSurpriseTarget(nodeCT);
     end
 
     rRoll.sDesc = "[CHECK] "
@@ -38,8 +40,16 @@ end
 
 -- return the current surprise value for this target.
 function getSurpriseTarget(node)
-    -- TODO: look at this more carefully, in terms of surprise base, hardcoded as 2, and the getvalue
-    local nBase = DB.getValue(node, "surprise.base", 3)
+    -- hardcode to 2 if > 2
+    -- TODO: get these set correctly
+    -- set to 2 if nothing returned
+    local nBase = DB.getValue(node, "surprise.base", 2)
+
+    -- if > 2 then set to 2 - need to probably handle this better
+    if nBase > 2 then
+        nBase = DB.getValue(node, "surprise.base", 2)
+    end
+
     local nMod = DB.getValue(node, "surprise.mod", 0)
     local nTmpMod = DB.getValue(node, "surprise.tempmod", 0)
     local nTotal = nBase + nMod + nTmpMod

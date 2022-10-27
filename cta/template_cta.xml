@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+    <!-- list of combatants -->
+    <template name="list_cta_combatants_host">
+        <windowlist name="list">
+            <script file="cta/scripts/cta_combatants_host.lua" />
+            <anchored>
+                <top anchor="top" relation="relative" offset="3" />
+                <left anchor="left" offset="1" />
+                <right anchor="right" offset="-10" />
+                <bottom anchor="bottom" offset="-3" />
+            </anchored>
+            <datasource>.list</datasource>
+            <class>combatants_entry_host</class>
+            <empty font="bold16" textres="ct_emptylist" />
+        </windowlist>
+    </template>
+</root>

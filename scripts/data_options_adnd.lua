@@ -12,7 +12,123 @@ function onInit()
 end
 
 function registerOptions()
-    Debug.console("ORIGINAL OPTIONS")
+    --Debug.console("ORIGINAL OPTIONS")
+    OptionsManager.registerOption2(
+        "RMMT",
+        true,
+        "option_header_client",
+        "option_label_RMMT",
+        "option_entry_cycler",
+        {
+            labels = "option_val_on|option_val_multi",
+            values = "on|multi",
+            baselabel = "option_val_off",
+            baseval = "off",
+            default = "multi"
+        }
+    )
+
+    OptionsManager.registerOption2(
+        "SHRR",
+        false,
+        "option_header_game",
+        "option_label_SHRR",
+        "option_entry_cycler",
+        {
+            labels = "option_val_on|option_val_friendly",
+            values = "on|pc",
+            baselabel = "option_val_off",
+            baseval = "off",
+            default = "on"
+        }
+    )
+    OptionsManager.registerOption2(
+        "PSMN",
+        false,
+        "option_header_game",
+        "option_label_PSMN",
+        "option_entry_cycler",
+        {labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off"}
+    )
+
+    -- OptionsManager.registerOption2("INIT", false, "option_header_combat", "option_label_INIT", "option_entry_cycler",
+    -- { labels = "option_val_on|option_val_group", values = "on|group", baselabel = "option_val_off", baseval = "off", default = "group" });
+
+    -- auto NPC initiative
+    -- change values to off/on, because grouped initiative always occurs in 1e/OSRIC
+    OptionsManager.registerOption2(
+        "autoNpcInitiative",
+        false,
+        "option_header_combat",
+        "option_label_autoNpcInitiative",
+        "option_entry_cycler",
+        {labels = "option_val_off", values = "off", baselabel = "option_val_on", baseval = "on", default = "on"}
+    )
+
+    OptionsManager.registerOption2(
+        "NPCD",
+        false,
+        "option_header_combat",
+        "option_label_NPCD",
+        "option_entry_cycler",
+        {
+            labels = "option_val_fixed",
+            values = "fixed",
+            baselabel = "option_val_variable",
+            baseval = "off",
+            default = "off"
+        }
+    )
+    OptionsManager.registerOption2(
+        "BARC",
+        false,
+        "option_header_combat",
+        "option_label_BARC",
+        "option_entry_cycler",
+        {labels = "option_val_tiered", values = "tiered", baselabel = "option_val_standard", baseval = "", default = ""}
+    )
+    OptionsManager.registerOption2(
+        "SHPC",
+        false,
+        "option_header_combat",
+        "option_label_SHPC",
+        "option_entry_cycler",
+        {
+            labels = "option_val_detailed|option_val_status",
+            values = "detailed|status",
+            baselabel = "option_val_off",
+            baseval = "off",
+            default = "detailed"
+        }
+    )
+    OptionsManager.registerOption2(
+        "SHNPC",
+        false,
+        "option_header_combat",
+        "option_label_SHNPC",
+        "option_entry_cycler",
+        {
+            labels = "option_val_detailed|option_val_status",
+            values = "detailed|status",
+            baselabel = "option_val_off",
+            baseval = "off",
+            default = "status"
+        }
+    )
+    OptionsManager.registerOption2(
+        "HRDD",
+        false,
+        "option_header_houserule",
+        "option_label_HRDD",
+        "option_entry_cycler",
+        {
+            labels = "option_val_standard|option_val_variant",
+            values = "standard|variant",
+            baselabel = "option_val_raw",
+            baseval = "raw",
+            default = "raw"
+        }
+    )
     -- use Menus or Sidebar
     OptionsManager.registerOption2(
         "OPTIONS_MENU",
@@ -73,14 +189,14 @@ function registerOptions()
 
     -- skip 0 hitpoint NPCs in the CT when advancing initiative.
     -- COMBAT
-    OptionsManager.registerOption2(
-        "CT_SKIP_DEAD_NPC",
-        false,
-        "option_header_combat",
-        "option_label_CT_SKIP_DEAD_NPC",
-        "option_entry_cycler",
-        {labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off"}
-    )
+    -- OptionsManager.registerOption2(
+    --     "CT_SKIP_DEAD_NPC",
+    --     false,
+    --     "option_header_combat",
+    --     "option_label_CT_SKIP_DEAD_NPC",
+    --     "option_entry_cycler",
+    --     {labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off"}
+    -- )
 
     -- re-register the version of this that CoreRPG does so that we can set the default ON since AD&D uses re-roll each round also --celestian
     OptionsManager.registerOption2(
@@ -237,25 +353,21 @@ function registerOptions()
 end
 
 wMenuWindow = nil
-
 function registerWindowMenu(wWindow)
     if not wMenuWindow then
         wMenuWindow = wWindow
         updateMenuStyle()
     end
 end
-
 wSidebarWindow = nil
-
 function registerWindowSidebar(wWindow)
     if not wSidebarWindow then
-        wSidebarWindow = wWindowF
+        wSidebarWindow = wWindow
         updateMenuStyle()
     end
 end
 
 local nUpdateVersion = 35
-
 function updateMenuStyle()
     if wMenuWindow and wSidebarWindow then
         Debug.console(
@@ -266,7 +378,6 @@ function updateMenuStyle()
         )
         local bMenuStyle =
             (OptionsManager.getOption("OPTIONS_MENU") == "menus" or OptionsManager.getOption("OPTIONS_MENU") == "")
-
         if bMenuStyle then
             enableMenuStyleButtons()
         else
@@ -296,8 +407,8 @@ function createBackupDBOnStartCheck()
 end
 
 -- recheck encumbrance settings with value changed.
--- function updateForEncumbranceOption()
---   for _,nodeChar in pairs(DB.getChildren("charsheet")) do
---     CharManager.calcWeightCarried(nodeChar)
---   end
--- end
+function updateForEncumbranceOption()
+    for _, nodeChar in pairs(DB.getChildren("charsheet")) do
+        CharManager.calcWeightCarried(nodeChar)
+    end
+end

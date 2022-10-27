@@ -6,8 +6,8 @@
 			<stringu name="background" merge="replace">
 				<script>
 					function onInit()
-						setVisible(false);
-						window.backgroundlink.setVisible(false);
+						setVisible(false)
+						window.backgroundlink.setVisible(false)
 					end
 				</script>
 				<anchored to="race" position="right" relation="relative" offset="30,0" width="80" />
@@ -16,8 +16,8 @@
 			<chooser_label name="background_choose" merge="replace">
 				<script>
 					function onInit()
-						super.onInit();
-						setVisible(false);
+						super.onInit()
+						setVisible(false)
 					end
 				</script>
 				<record>background</record>
@@ -43,6 +43,57 @@
 				</anchored>
 				<static textres="char_label_race" />
 			</label_titlechar_visible>
+
+			<!-- TODO: make sure these work according to OSRIC RAW -->
+			<string_abilityfield name="strength_opendoors" source="abilities.strength.opendoors" merge="replace">
+				<script>
+					function onDoubleClick(x,y)
+						action(nil)
+					end  
+
+					function action(draginfo)
+						local nodeChar = getDatabaseNode().getChild("....")
+						local sOpenDoor = getValue()
+
+						local sOpenDoorSuccessValue = string.gsub(sOpenDoor, "%(%d+%)", "")
+
+						if string.match(sOpenDoorSuccessValue, "-") then
+							sOpenDoorSuccessValue = string.sub(sOpenDoorSuccessValue, -1)
+						end
+
+						local sOpenMagicDoorSuccessValue = sOpenDoorSuccessValue:match("^%d+%((%d+)%)")
+						local rActor = ActorManager.resolveActor(nodeChar)
+						
+						local nTargetSuccessValue = tonumber(sOpenDoorSuccessValue) or 0
+						local nTargetMagicSuccessValue = tonumber(sOpenMagicDoorSuccessValue) or 0
+
+						if nTargetMagicSuccessValue > 0 then
+							ActionCheckManagerOsric.performRoll(draginfo, rActor, "Open Magic Door", nTargetMagicSuccessValue)
+						end
+
+						ActionCheckManagerOsric.performRoll(draginfo, rActor, "Open Door", nTargetSuccessValue)
+						
+						return true
+					end
+
+					function onDragStart(button, x, y, draginfo)
+						return action(draginfo)
+					end          
+				</script>
+				<rollable />
+				<anchored to="strength_maxpress"/>
+				<tooltip textres="char_tooltip_strength_opendoors" />
+				<labelres>char_label_strength_opendoors</labelres>
+			</string_abilityfield>
+
+			<number_abilityfield_noplus_percentchecks name="strength_bendbars" source="abilities.strength.bendbars" merge="replace">
+				<target>Bend Bars</target>
+				<anchored to="strength_opendoors"/>
+				<tooltip textres="char_tooltip_strength_bendbars" />
+				<labelres>char_label_strength_bendbars</labelres>
+			</number_abilityfield_noplus_percentchecks>
+			<!--  -->
+
 		</sheetdata>
 	</windowclass>
 </root>      

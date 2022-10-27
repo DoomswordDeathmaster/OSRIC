@@ -10,7 +10,6 @@
 		<script file="campaign/scripts/npc_fights_saves_as.lua" />
 		<script>
 			function onInit()
-			if (DataCommonADND.coreVersion ~= "1e") then
 				fights_as_label.setVisible(false);
 				fights_as.setVisible(false);
 				fights_as_hd_level_label.setVisible(false);
@@ -21,7 +20,6 @@
 				saves_as_hd_level_label.setVisible(false);
 				saves_as_hd_level.setVisible(false);
 				npc_click_choose_saves_as.setVisible(false);
-			end
 			end
 		</script>
 		<sheetdata>
