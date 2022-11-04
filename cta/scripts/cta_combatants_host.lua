@@ -3,9 +3,6 @@
 -- attribution and copyright information.
 --
 
--- Just the stuff we need to override
--- TODO: Try to convert npcs ondrop
-
 function onInit()
 	-- if super and super.onInit then
 	-- 	Debug.console("super and oninit found")
@@ -151,7 +148,7 @@ function findWindowByNode(nodeCT)
 end
 
 function onDrop(x, y, draginfo)
-	Debug.console("cta_combatants_host.lua", "onDrop", "draginfo", draginfo)
+	Debug.console("cta_combatants_host.lua", "onDrop", "draginfo", draginfo.getDatabaseNode())
 	-- dropping char,npc,encounter
 	if draginfo.isType("shortcut") then
 		if not Session.IsHost then
@@ -159,11 +156,57 @@ function onDrop(x, y, draginfo)
 		end
 
 		local sClass, sRecord = draginfo.getShortcutData()
+
+		--Debug.console(draginfo.getDatabaseNode)
+
 		if sClass == "charsheet" then
 			CombatRecordManager.onRecordTypeEvent("charsheet", {sClass = "charsheet", nodeRecord = draginfo.getDatabaseNode()})
 			return true
 		elseif sClass == "npc" then
-			CombatRecordManager.onRecordTypeEvent("npc", {sClass = "npc", nodeRecord = draginfo.getDatabaseNode()})
+			-- take the token from draginfo
+			sToken = DB.getValue(draginfo.getDatabaseNode(), "token", "");
+
+			-- get the name from the dragged node
+			local sDraggedNodeName = DB.getText(draginfo.getDatabaseNode(), "name", "")
+
+			-- see if OSRIC returns a node result with a matching name
+			local nodeOsricNpcResult = UtilityManagerOsric.findNpcRecord(sDraggedNodeName)
+
+			-- OSRIC npc exists, alternative or dragged from osric itself
+			if nodeOsricNpcResult ~= nil then
+				-- get the original osric token and name
+				local sOriginalOsricNodeToken = nodeOsricNpcResult.getChild("token").getValue()
+				local sOriginalOsricNodeName = nodeOsricNpcResult.getChild("name").getValue()
+				--Debug.console("sOriginalOsricNodeToken", sOriginalOsricNodeToken)
+				--Debug.console("sOriginalOsricNodeName", sOriginalOsricNodeName)
+				
+				-- tokens are different between module and osric
+				if sToken ~= sOriginalOsricNodeToken then
+					-- set the token to whatever was dragged
+					nodeOsricNpcResult.getChild("token").setValue(sToken)
+				end
+
+				-- not dragging from osric
+				if not string.match(draginfo.getDatabaseNode().getPath(), "OSRIC") then
+					-- set the name to whatever was dragged, indicating it was (c) converted
+					nodeOsricNpcResult.getChild("name").setValue(sDraggedNodeName .. " (c)")
+				end
+
+				-- add the converted npc, modified or not, to the combat tracker
+				CombatRecordManager.onRecordTypeEvent("npc", {sClass = "npc", nodeRecord = nodeOsricNpcResult})
+
+				-- reset to osric original values so that the osric refs don't retain any modifications
+				--Debug.console("osric token reset")
+				nodeOsricNpcResult.getChild("token").setValue(sOriginalOsricNodeToken)
+				nodeOsricNpcResult.getChild("name").setValue(sOriginalOsricNodeName)
+				--Debug.console(nodeOsricNpcResult.getChild("token").getValue(), nodeOsricNpcResult.getChild("name").getValue())
+			else
+				
+				local nodeNpc = draginfo.getDatabaseNode()
+
+				CombatRecordManager.onRecordTypeEvent("npc", {sClass = "npc", nodeRecord = nodeNpc})
+			end
+
 			return true
 		elseif sClass == "battle" then
 			CombatRecordManager.onRecordTypeEvent("battle", {sClass = "battle", nodeRecord = draginfo.getDatabaseNode()})

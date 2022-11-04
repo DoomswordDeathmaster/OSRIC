@@ -10,16 +10,28 @@
 		<script file="campaign/scripts/npc_fights_saves_as.lua" />
 		<script>
 			function onInit()
-				fights_as_label.setVisible(false);
-				fights_as.setVisible(false);
-				fights_as_hd_level_label.setVisible(false);
-				fights_as_hd_level.setVisible(false);
-				npc_click_choose_fights_as.setVisible(false);
-				saves_as_label.setVisible(false);
-				saves_as.setVisible(false);
-				saves_as_hd_level_label.setVisible(false);
-				saves_as_hd_level.setVisible(false);
-				npc_click_choose_saves_as.setVisible(false);
+				local fightsAsClass = fights_as.getValue();
+				local savesAsClass = saves_as.getValue();
+
+				Debug.console("fightsAsClass", fightsAsClass, "savesAsClass", savesAsClass)
+				
+				fights_as_label.setVisible(true);
+				fights_as.setVisible(true);
+				fights_as_hd_level_label.setVisible(true);
+				fights_as_hd_level.setVisible(true);
+				
+				if fightsAsClass == "" then
+					npc_click_choose_fights_as.setVisible(true);
+				end
+
+				saves_as_label.setVisible(true);
+				saves_as.setVisible(true);
+				saves_as_hd_level_label.setVisible(true);
+				saves_as_hd_level.setVisible(true);
+				
+				if savesAsClass == "" then
+					npc_click_choose_saves_as.setVisible(true);
+				end
 			end
 		</script>
 		<sheetdata>
