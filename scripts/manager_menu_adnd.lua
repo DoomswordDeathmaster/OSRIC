@@ -5,30 +5,29 @@
 
 aAddMenuList = {}
 menusWindow = nil
-local funcOriginalInitialization;
+--local funcOriginalInitialization;
 function onInit()
-
-  -- because we do not always have a sidebar we do this.
-  -- store the original sidebar initialization function
-  funcOriginalInitialization = DesktopManager.initializeSidebar;
-  -- now point it to ours
-  DesktopManager.initializeSidebar = initializeSidebar_adnd;  
+  -- -- because we do not always have a sidebar we do this.
+  -- -- store the original sidebar initialization function
+  -- funcOriginalInitialization = DesktopManager.initializeSidebar;
+  -- -- now point it to ours
+  -- DesktopManager.initializeSidebar = initializeSidebar_adnd;
 
   Comm.registerSlashHandler("preferences", processPreferences)
   Comm.registerSlashHandler("settings", processPreferences)
   Comm.registerSlashHandler("options", processPreferences)
 end
 
--- override CoreRPG function with this because of the dropdown menu
-function initializeSidebar_adnd()
-  local bMenuStyle = false --(OptionsManager.getOption("OPTIONS_MENU") == 'menus' or OptionsManager.getOption("OPTIONS_MENU") == '');
-  -- Debug.console("manager_desktop_adnd.lua","initializeSidebar_adnd","bMenuStyle",bMenuStyle);
-  
-  -- if not using drop down menus, we initialize sidebar.
-  if not bMenuStyle then 
-      funcOriginalInitialization();
-  end
-end
+-- -- override CoreRPG function with this because of the dropdown menu
+-- function initializeSidebar_adnd()
+--   local bMenuStyle = false --(OptionsManager.getOption("OPTIONS_MENU") == 'menus' or OptionsManager.getOption("OPTIONS_MENU") == '');
+--   -- Debug.console("manager_desktop_adnd.lua","initializeSidebar_adnd","bMenuStyle",bMenuStyle);
+
+--   -- if not using drop down menus, we initialize sidebar.
+--   if not bMenuStyle then
+--       funcOriginalInitialization();
+--   end
+-- end
 
 --[[
   This will add a custom menu/window item to the Menu button.

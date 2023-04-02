@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <root version="3.0" release="35" logo="logo.png">
   <announcement text="OSRIC \r(c) Stuart Marshall" font="emotefont" icon="doomsword_icon" />
-  <announcement text="OSRIC v2023.01.09 For Fantasy Grounds\r--by Doomsword" font="emotefont" icon="doomsword_icon" />
+  <announcement text="OSRIC v2023.04.01 For Fantasy Grounds\r--by Doomsword" font="emotefont" icon="doomsword_icon" />
 
   <!-- Attributes -->
 

@@ -4,7 +4,7 @@ function onInit()
     ActionDamage.modDamage = modDamageOsric
 end
 
--- brought this in to later remove critical options
+-- brought this in to later remove critical options from code and clean up
 function modDamageOsric(rSource, rTarget, rRoll)
     ActionDamage.decodeDamageTypes(rRoll)
     CombatManagerADND.addRightClickDiceToClauses(rRoll)
@@ -180,6 +180,7 @@ function modDamageOsric(rSource, rTarget, rRoll)
 
     -- Handle critical
     local sOptCritType = OptionsManager.getOption("HouseRule_CRIT_TYPE")
+    Debug.console("ActionDamageManagerOsric", "sOptCritType", sOptCritType)
     -- no bonus for crit hit
     if bCritical and sOptCritType == "none" then
         -- max damage for crit hit
@@ -209,13 +210,16 @@ function modDamageOsric(rSource, rTarget, rRoll)
 
         -- Double the dice, and add extra critical dice
         local nOldDieIndex = 1
-        local aNewClauses = {}
         local aNewDice = {}
+        local nMaxDieIndex = 0
+
+        local aNewClauses = {}
         local nMaxSides = 0
         local nMaxClause = 0
-        local nMaxDieIndex = 0
+
+        -- Add critical dice by clause
         for kClause, vClause in ipairs(rRoll.clauses) do
-            table.insert(aNewClauses, vClause)
+            --table.insert(aNewClauses, vClause)
 
             local bApplyCritToClause = true
             local aSplitByDmgType = StringManager.split(vClause.dmgtype, ",", true)
@@ -226,10 +230,10 @@ function modDamageOsric(rSource, rTarget, rRoll)
                 end
             end
 
-            for _, vDie in ipairs(vClause.dice) do
-                table.insert(aNewDice, rRoll.aDice[nOldDieIndex])
-                nOldDieIndex = nOldDieIndex + 1
-            end
+            -- for _, vDie in ipairs(vClause.dice) do
+            --     table.insert(aNewDice, rRoll.aDice[nOldDieIndex])
+            --     nOldDieIndex = nOldDieIndex + 1
+            -- end
 
             if bApplyCritToClause then
                 local bNewMax = false
@@ -270,28 +274,26 @@ function modDamageOsric(rSource, rTarget, rRoll)
 
                     if bNewMax then
                         nMaxClause = #aNewClauses
-                        nMaxDieIndex = #aNewDice + 1
                     end
                 end
             end
         end
+
         if nMaxSides > 0 then
             local nCritDice = 0
-            if rRoll.bWeapon and ActorManager.isPC(rSource) then
-                local nodePC = ActorManager.getCreatureNode(rSource)
-                if rRoll.range == "R" then
-                    nCritDice = DB.getValue(nodePC, "weapon.critdicebonus.ranged", 0)
-                elseif rRoll.range == "M" then
-                    nCritDice = DB.getValue(nodePC, "weapon.critdicebonus.melee", 0)
-                elseif rRoll.range == "P" then
-                -- no crits on psionics
-                --nCritDice = DB.getValue(nodePC, "weapon.critdicebonus.melee", 0);
+            if rRoll.bWeapon then
+                local sSourceNodeType, nodeSource = ActorManager.getTypeAndNode(rSource)
+                if nodeSource and (sSourceNodeType == "pc") then
+                    if rRoll.sRange == "R" then
+                        nCritDice = DB.getValue(nodeSource, "weapon.critdicebonus.ranged", 0)
+                    else
+                        nCritDice = DB.getValue(nodeSource, "weapon.critdicebonus.melee", 0)
+                    end
                 end
             end
 
             if nCritDice > 0 then
                 for i = 1, nCritDice do
-                    table.insert(aNewDice, nMaxDieIndex, "g" .. nMaxSides)
                     table.insert(aNewClauses[nMaxClause].dice, "d" .. nMaxSides)
                     if aNewClauses[nMaxClause].reroll then
                         table.insert(aNewClauses[nMaxClause].reroll, aNewClauses[nMaxClause].reroll[1])
@@ -299,12 +301,48 @@ function modDamageOsric(rSource, rTarget, rRoll)
                 end
             end
         end
-        local aFinalClauses = {}
+
         for _, vClause in ipairs(aNewClauses) do
             table.insert(rRoll.clauses, vClause)
+
+            local tDiceData = {
+                dmgtype = vClause.dmgtype,
+                iconcolor = "00FF00"
+            }
+            DiceRollManager.addDamageDice(rRoll.aDice, vClause.dice, tDiceData)
         end
-        --rRoll.clauses = aNewClauses;
-        rRoll.aDice = aNewDice
+    -- if nMaxSides > 0 then
+    --     local nCritDice = 0
+    --     if rRoll.bWeapon and ActorManager.isPC(rSource) then
+    --         local nodePC = ActorManager.getCreatureNode(rSource)
+    --         if rRoll.range == "R" then
+    --             nCritDice = DB.getValue(nodePC, "weapon.critdicebonus.ranged", 0)
+    --         elseif rRoll.range == "M" then
+    --             nCritDice = DB.getValue(nodePC, "weapon.critdicebonus.melee", 0)
+    --         elseif rRoll.range == "P" then
+    --         -- no crits on psionics
+    --         --nCritDice = DB.getValue(nodePC, "weapon.critdicebonus.melee", 0);
+    --         end
+    --     end
+
+    --     if nCritDice > 0 then
+    --         for i = 1, nCritDice do
+    --             table.insert(aNewDice, nMaxDieIndex, "g" .. nMaxSides)
+    --             table.insert(aNewClauses[nMaxClause].dice, "d" .. nMaxSides)
+    --             if aNewClauses[nMaxClause].reroll then
+    --                 table.insert(aNewClauses[nMaxClause].reroll, aNewClauses[nMaxClause].reroll[1])
+    --             end
+    --         end
+    --     end
+    -- end
+
+    -- --local aFinalClauses = {}
+
+    -- for _, vClause in ipairs(aNewClauses) do
+    --     table.insert(rRoll.clauses, vClause)
+    -- end
+    -- --rRoll.clauses = aNewClauses;
+    -- rRoll.aDice = aNewDice
     end
 
     -- Handle fixed damage option
@@ -1032,7 +1070,7 @@ function updatePcCondition(
             if nAdjustedDamage > nCurrentHp + nDeathDoorThreshold then
                 -- new hit causing hit points to drop to 0
                 if not EffectManager5E.hasEffect(rTarget, "Dead") then
-                    EffectManager.removeEffect(ActorManager.getCTNode(rTarget), "Unconscious");
+                    EffectManager.removeEffect(ActorManager.getCTNode(rTarget), "Unconscious")
                     EffectManager.addEffect(
                         "",
                         "",
