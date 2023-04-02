@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <root version="3.0" release="35" logo="logo.png">
   <announcement text="OSRIC \r(c) Stuart Marshall" font="emotefont" icon="doomsword_icon" />
-  <announcement text="OSRIC v2022.10.30 For Fantasy Grounds\r--by Doomsword" font="emotefont" icon="doomsword_icon" />
+  <announcement text="OSRIC v2023.01.09 For Fantasy Grounds\r--by Doomsword" font="emotefont" icon="doomsword_icon" />
 
   <!-- Attributes -->
 
@@ -27,7 +27,7 @@
   <includefile source="campaign/record_class.xml" />
   <includefile source="campaign/record_npc.xml" />
   <includefile source="campaign/template_campaign.xml" />
-  <includefile source="campaign/template_cta.xml" />
+  <includefile source="cta/template_cta.xml" />
   <includefile source="campaign/template_npc.xml" />
   <includefile source="campaign/template_char_osric.xml" />
   <includefile source="cta/cta_host.xml" />

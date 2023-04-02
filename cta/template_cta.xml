@@ -1,24 +1,76 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-
-<!-- 
-  Please see the license.html file included with this distribution for 
-  attribution and copyright information.
--->
-
 <root>
-    <!-- list of combatants -->
-    <template name="list_cta_combatants_host">
-        <windowlist name="list">
-            <script file="cta/scripts/cta_combatants_host.lua" />
-            <anchored>
-                <top anchor="top" relation="relative" offset="3" />
-                <left anchor="left" offset="1" />
-                <right anchor="right" offset="-10" />
-                <bottom anchor="bottom" offset="-3" />
-            </anchored>
-            <datasource>.list</datasource>
-            <class>combatants_entry_host</class>
-            <empty font="bold16" textres="ct_emptylist" />
-        </windowlist>
-    </template>
+	<template name="button_ctaentry_initresult">
+		<number_ct_crosslink name="initresult">
+			<script>
+				function onInit()
+					setVisible(false);
+				end
+				function action(draginfo)
+					local node = window.getDatabaseNode();
+					draginfo.setDescription(DB.getValue(node,"name",""));
+					draginfo.setShortcutData("reorder_cta_initiative",node.getPath());
+					draginfo.setIcon("reorder_arrow");
+					draginfo.setType("reorder");
+					return true;
+				end
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+			</script>
+			<readonly />
+			<color>FFFFFF</color>
+			<frame name="d10red" offset="-1,3,0,0" />
+			<anchored to="token" height="20" width="25">
+				<top anchor="top" offset="5" />
+				<left anchor="right" relation="relative" offset="0" />
+			</anchored>
+			<tooltip textres="cta_initiative_tooltip" />
+		</number_ct_crosslink>
+	</template>
+
+	<template name="button_ctaentry_initresult_d6">
+		<number_ct_crosslink name="initresult_d6">
+			<script>
+				function onInit()
+					setVisible(true);
+				end
+				function action(draginfo)
+					local node = window.getDatabaseNode();
+					draginfo.setDescription(DB.getValue(node,"name",""));
+					draginfo.setShortcutData("reorder_cta_initiative",node.getPath());
+					draginfo.setIcon("reorder_arrow");
+					draginfo.setType("reorder");
+					return true;
+				end
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+			</script>
+			<readonly />
+			<color>FFFFFF</color>
+			<frame name="d6red" offset="-1,3,0,0" />
+			<anchored to="token" height="20" width="25">
+				<top anchor="top" offset="5" />
+				<left anchor="right" relation="relative" offset="0" />
+			</anchored>
+			<tooltip textres="cta_initiative_tooltip" />
+		</number_ct_crosslink>
+	</template>
+
+	<!-- list of combatants -->
+	<template name="list_cta_combatants_host">
+		<windowlist name="list">
+			<script file="cta/scripts/cta_combatants_host.lua" />
+			<anchored>
+				<top anchor="top" relation="relative" offset="3" />
+				<left anchor="left" offset="1" />
+				<right anchor="right" offset="-10" />
+				<bottom anchor="bottom" offset="-3" />
+			</anchored>
+			<datasource>.list</datasource>
+			<class>combatants_entry_host</class>
+			<empty font="bold16" textres="ct_emptylist" />
+		</windowlist>
+	</template>
 </root>

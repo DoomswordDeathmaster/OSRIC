@@ -12,8 +12,6 @@
 			function onInit()
 				local fightsAsClass = fights_as.getValue();
 				local savesAsClass = saves_as.getValue();
-
-				Debug.console("fightsAsClass", fightsAsClass, "savesAsClass", savesAsClass)
 				
 				fights_as_label.setVisible(true);
 				fights_as.setVisible(true);

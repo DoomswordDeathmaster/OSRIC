@@ -40,7 +40,7 @@ function rollEntryInitOsric(nodeEntry)
         return
     end
 
-    --Debug.console("rollEntryInitOsric")
+    Debug.console("rollEntryInitOsric")
 
     -- PC/NPC init
     local sClass, sRecord = DB.getValue(nodeEntry, "link", "", "")
@@ -188,6 +188,8 @@ end
 
 function handleInitiativeChangeOsric(msgOOB)
     local nodeCT = DB.findNode(msgOOB.sCTRecord)
+
+    --Debug.console("handleInitiativeChangeOsric", "nodeCT", nodeCT)
 
     if nodeCT then
         DB.setValue(nodeCT, "initresult", "number", msgOOB.nNewInit)

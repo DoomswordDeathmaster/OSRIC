@@ -41,10 +41,10 @@ function handleApplyInitOsric(msgOOB)
 
 	local nInitRoll = tonumber(msgOOB.nTotal) or 0
 
-	local bOptInitTies = (OptionsManager.getOption("initiativeTiesAllow") == "on")
-	local bOptInitGroupingSwap = (OptionsManager.getOption("initiativeGroupingSwap") == "on")
-	local sOptInitGrouping = OptionsManager.getOption("initiativeGrouping")
-	local sOptInitOrdering = OptionsManager.getOption("initiativeOrdering")
+	-- local bOptInitTies = (OptionsManager.getOption("initiativeTiesAllow") == "on")
+	-- local bOptInitGroupingSwap = (OptionsManager.getOption("initiativeGroupingSwap") == "on")
+	-- local sOptInitGrouping = OptionsManager.getOption("initiativeGrouping")
+	-- local sOptInitOrdering = OptionsManager.getOption("initiativeOrdering")
 
 	--Debug.console("handleApplyInitAdndOsric", "msgOOB", msgOOB, "sOptInitGrouping", sOptInitGrouping)
 

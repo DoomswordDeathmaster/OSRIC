@@ -7,14 +7,21 @@ function findNpcRecord(sNpcName)
 
 	for _, sMap in ipairs(vMappings) do
 		for _, nodeNpc in pairs(DB.getChildrenGlobal(sMap)) do
-			local sName = DB.getValue(nodeNpc, "name")
-			sName = StringManager.trim(sName)
 
-			if (sName:lower() == sNpcName:lower()) then
-				if string.match(nodeNpc.getPath(), "OSRIC") then
-					--nodeNpc.getChild("token").setValue(sToken)
-					nodeNpcResult = nodeNpc
-					break
+			local sName = DB.getValue(nodeNpc, "name")
+
+			if (sName ~= nil and sNpcName ~= nil) then
+				sName = StringManager.trim(sName)
+
+				if (sName:lower() == sNpcName:lower()) then
+
+					Debug.console("UtilityManagerOSRIC:18", "sName", sName, "nodeNpc", nodeNpc, "sNpcName", sNpcName)
+
+					if string.match(nodeNpc.getPath(), "OSRIC") then
+						--nodeNpc.getChild("token").setValue(sToken)
+						nodeNpcResult = nodeNpc
+						break
+					end
 				end
 			end
 		end

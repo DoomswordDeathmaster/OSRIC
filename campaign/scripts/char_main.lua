@@ -40,14 +40,24 @@ end
 function updateSurpriseScores()
 	local nodeChar = getDatabaseNode()
 	
-	-- hardcode to 2 if > 2
-    -- TODO: get these set correctly
-    -- set to 2 if nothing returned
-    local nSurpriseBase = DB.getValue(node, "surprise.base", 2)
+	-- deal with setting surprise based on surprise die
+    local nSurpriseBase = DataCommonOsric.nSurpriseBase
+    local nBase = DB.getValue(nodeChar, "surprise.base", nSurpriseBase)
 
-	if DB.getValue(nodeChar, "surprise.base" ,2) > 2 then
-		local nSurpriseBase = 2
-	end
+    -- d12 from advanced combat option, double the module surprise base
+    if nSurpriseBase == 4 and nBase ~= 4 then
+        nBase = nBase * 2
+    end
+
+    Debug.console("nSurpriseBase", nSurpriseBase, "nBase", nBase)
+	-- -- hardcode to 2 if > 2
+    -- -- TODO: get these set correctly
+    -- -- set to 2 if nothing returned
+    -- local nSurpriseBase = DB.getValue(node, "surprise.base", 2)
+
+	-- if DB.getValue(nodeChar, "surprise.base" ,2) > 2 then
+	-- 	local nSurpriseBase = 2
+	-- end
 
 	-- no mods in 1e/OSRIC
 	local nMod = 0

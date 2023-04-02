@@ -683,9 +683,9 @@ function applyDamageOsric(rSource, rTarget, bSecret, sDamage, nTotal, aDice)
             -- Prepare for calcs
             local nodeTargetCT = ActorManager.getCTNode(rTarget)
 
-            -- deal with death's door threshold
+            -- deal with death's door threshold - NPC Only
             -- currently has hp
-            if nCurrentHp > 0 then
+            if sTargetType == "pc" and nCurrentHp > 0 then
                 -- todo: System Shock
                 -- Add check here for nAdjustedDamage > 50 and if so perform system shock check?-- celestian, AD&D
                 -- hit after having zero or less hp - dead
