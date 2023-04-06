@@ -1,5 +1,5 @@
 ---
----
+--- Create Combat Calc Matrix
 ---
 ---
 
@@ -10,11 +10,67 @@ function onInit()
 	-- Debug.console("char_matrix","onInit","bisPC",bisPC);
 
 	-- DB.addHandler(DB.getPath(node, "fights_as_hd_level"), "onUpdate", createAttackMatrix);
+	local node = getDatabaseNode()
+	local bisPC = (ActorManager.isPC(node))
+	local bUseMatrix = (DataCommonADND.coreVersion == "1e")
+
+	if bUseMatrix then
+		-- default value is 1e.
+		local nLowAC = -10
+		local nHighAC = 10
+		local nTotalACs = 11
+
+		if (DataCommonADND.coreVersion == "becmi") then
+			nLowAC = -20
+			nHighAC = 19
+			nTotalACs = 20
+		end
+
+		DB.addHandler(DB.getPath(node, "combat.matrix.*"), "onUpdate", update);
+
+		-- change combat calc matrix values for npc fights_as or pc level change matrix updates
+		for i = nLowAC, nHighAC, 1 do
+			-- do this only on PCs, to avoid recursion and allow proper updates for fights_as when npc combat calc window is already open
+			if bisPC then
+				DB.addHandler(DB.getPath(node, "thac" .. i), "onUpdate", update)
+			end
+		end
+	else
+		if (bisPC) then
+			DB.addHandler(DB.getPath(node, "combat.thaco.score"), "onUpdate", update)
+		else
+			DB.addHandler(DB.getPath(node, "thaco"), "onUpdate", update)
+		end
+	end
 
 	createAttackMatrix()
 end
 
 function onClose()
+	if bUseMatrix then
+		-- default value is 1e.
+		local nLowAC = -10
+		local nHighAC = 10
+		local nTotalACs = 11
+
+		if (DataCommonADND.coreVersion == "becmi") then
+			nLowAC = -20
+			nHighAC = 19
+			nTotalACs = 20
+		end
+
+		DB.removeHandler(DB.getPath(node, "combat.matrix.*"), "onUpdate", update);
+
+		for i = nLowAC, nHighAC, 1 do
+			DB.removeHandler(DB.getPath(node, "thac" .. i), "onUpdate", update)
+		end
+	else
+		if (bisPC) then
+			DB.removeHandler(DB.getPath(node, "combat.thaco.score"), "onUpdate", update)
+		else
+			DB.removeHandler(DB.getPath(node, "thaco"), "onUpdate", update)
+		end
+	end
 	-- local node = getDatabaseNode();
 	-- local bisPC = (ActorManager.isPC(node));
 	-- Debug.console("char_matrix","onClose","bisPC",bisPC);
@@ -217,3 +273,29 @@ function createAttackMatrix()
 		cntAC.setAnchor("left", sMatrixNumberName, "left", "absolute", 0)
 	end
 end
+
+-- continue working on this
+-- update for handler registration
+function update()
+	--Debug.console("char_matrix_thaco.lua:276", "updating combat_mini_thaco_matrix")
+	local node = getDatabaseNode();
+  --Debug.console("char_matrix_thaco.lua","update","node",node);
+	local bisPC = (ActorManager.isPC(node)); 
+  --Debug.console("char_matrix_thaco.lua","createTHACOMatrix","node",node);
+	local bUseMatrix = (DataCommonADND.coreVersion ~= "2e");
+  
+	local nTHACO = DB.getValue(node,"combat.thaco.score",20);
+	if (not bisPC) then
+	  nTHACO = DB.getValue(node,"thaco",20);
+	end
+	for i=-10,10,1 do -- update to changed THACO. Set the new values in previously created controls
+	  local nTHAC = nTHACO - i;
+	  if bUseMatrix then
+		nTHAC = DB.getValue(node,"combat.matrix.thac" .. i, 20);
+	  end
+	  
+	  local sMatrixNumberName = "thac" .. i; -- control name for the THACO label
+	  local cnt = self[sMatrixNumberName];   -- get the control for this, stringcontrol named thac-10 .. thac10
+	  cnt.setValue(nTHAC); -- set new to hit AC value
+	end
+  end

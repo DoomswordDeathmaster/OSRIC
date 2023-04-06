@@ -1,5 +1,5 @@
 ---
---- Creates controls/updates for THACO Attack Matrix window
+--- Create Combat Mini Matrix
 ---
 ---
 function onInit()
@@ -19,6 +19,9 @@ function onInit()
 			nTotalACs = 20
 		end
 
+		DB.addHandler(DB.getPath(node, "combat.matrix.*"), "onUpdate", update);
+
+		-- change mini matrix values for npc fights_as or pc level change matrix updates
 		for i = nLowAC, nHighAC, 1 do
 			DB.addHandler(DB.getPath(node, "thac" .. i), "onUpdate", update)
 		end
@@ -50,6 +53,8 @@ function onClose()
 			nTotalACs = 20
 		end
 
+		DB.removeHandler(DB.getPath(node, "combat.matrix.*"), "onUpdate", update);
+
 		for i = nLowAC, nHighAC, 1 do
 			DB.removeHandler(DB.getPath(node, "thac" .. i), "onUpdate", update)
 		end
@@ -61,6 +66,12 @@ function onClose()
 		end
 	end
 end
+
+-- function update()
+-- 	Debug.console("char_matrix_thaco.lua:66", "updating combat_mini_thaco_matrix")
+-- 	local node = getDatabaseNode()
+-- 	CharMatrixThacoManagerOsric.updateCombatMiniThacoMatrix(node)
+-- end
 
 -- create combat_mini_thaco_matrix
 function createTHACOMatrix()
@@ -261,7 +272,7 @@ end
 
 -- update combat_mini_thaco_matrix from db values
 function update()
-	--Debug.console("char_matrix_thaco.lua:130", "updating combat_mini_thaco_matrix")
+	--Debug.console("char_matrix_thaco.lua:275", "updating combat_mini_thaco_matrix")
 	local node = getDatabaseNode()
 	local bisPC = (ActorManager.isPC(node))
 	local bUseMatrix = (DataCommonADND.coreVersion ~= "2e")
@@ -278,12 +289,14 @@ function update()
 
 		if bUseMatrix then
 			nTHAC = DB.getValue(node, "thac" .. i, 20)
+			--Debug.console("char_matrix_thaco.lua", "bUseMatrix", "nTHAC", nTHAC)
 		end
 
 		local sMatrixNumberName = "thac" .. i -- control name for the THACO label
 		local cnt = self[sMatrixNumberName] -- get the control for this, stringcontrol named thac-10 .. thac10
 
 		if cnt then
+			--Debug.console("char_matrix_thaco.lua", "cnt", cnt, "nTHAC", nTHAC)
 			cnt.setValue(nTHAC) -- set new to hit AC value
 		end
 	end
