@@ -8,31 +8,31 @@ function onInit()
 	-- 	Debug.console("super and oninit found")
 	-- 	super.onInit()
 	-- end
-	  local node = getDatabaseNode();
+	local node = getDatabaseNode()
 	--Debug.console("cta_combatants_host.lua","onInit","node",node);
 
-	  --DB.addHandler(DB.getPath(node, "*.hp.wounds"), "onChildUpdate", updateHPBars);
+	--DB.addHandler(DB.getPath(node, "*.hp.wounds"), "onChildUpdate", updateHPBars);
 
-	  --DB.addHandler(DB.getPath(node, "*.effects"), "onChildAdded", updateForEffectsChange);
-	  DB.addHandler(DB.getPath(node, "*.effects"), "onChildDeleted", updateForEffectsChange);
-	  --DB.addHandler(DB.getPath(node, "*.effects"), "onChildUpdate", updateForEffectsChange);
-	  DB.addHandler(DB.getPath(node, "*.effects.*.label"), "onUpdate", updateEffectChange);
-	  DB.addHandler(DB.getPath(node, "*.effects.*.isactive"), "onUpdate", updateEffectChange);
+	--DB.addHandler(DB.getPath(node, "*.effects"), "onChildAdded", updateForEffectsChange);
+	DB.addHandler(DB.getPath(node, "*.effects"), "onChildDeleted", updateForEffectsChange)
+	--DB.addHandler(DB.getPath(node, "*.effects"), "onChildUpdate", updateForEffectsChange);
+	DB.addHandler(DB.getPath(node, "*.effects.*.label"), "onUpdate", updateEffectChange)
+	DB.addHandler(DB.getPath(node, "*.effects.*.isactive"), "onUpdate", updateEffectChange)
 
-	  DB.addHandler(DB.getPath(node, "*.targets"), "onChildUpdate", toggleSelectedTargets);
-	  DB.addHandler(DB.getPath(node, "*.targets"), "onChildDeleted", toggleSelectedTargets);
-	  DB.addHandler(DB.getPath(node, "*.targets"), "onChildAdded", toggleSelectedTargets);
+	DB.addHandler(DB.getPath(node, "*.targets"), "onChildUpdate", toggleSelectedTargets)
+	DB.addHandler(DB.getPath(node, "*.targets"), "onChildDeleted", toggleSelectedTargets)
+	DB.addHandler(DB.getPath(node, "*.targets"), "onChildAdded", toggleSelectedTargets)
 
-	  local nCount = DB.getChildCount(node.getParent(),"list");
-	  -- we dont run this unless we actually have nodes otherwise it'll
-	  -- add filler nodes into combattracker.*
-	  if nCount > 0 then
-	    clearCombatantsSelectedTargetIcon();
+	local nCount = DB.getChildCount(node.getParent(), "list")
+	-- we dont run this unless we actually have nodes otherwise it'll
+	-- add filler nodes into combattracker.*
+	if nCount > 0 then
+		clearCombatantsSelectedTargetIcon()
 
-	    -- first time start of CT, clear selected
-	    --clearSelect();
-	    --onListChanged();
-	  end
+	-- first time start of CT, clear selected
+	--clearSelect();
+	--onListChanged();
+	end
 end
 
 function onClose()
@@ -40,18 +40,18 @@ function onClose()
 	-- 	Debug.console("super and onclose found")
 	-- 	super.onClose()
 	-- end
-	local node = getDatabaseNode();
+	local node = getDatabaseNode()
 	--Debug.console("cta_combatants_host.lua","onClose","node",node);
 
 	--DB.removeHandler(DB.getPath(node, "*.effects"), "onChildAdded", updateForEffectsChange);
-	DB.removeHandler(DB.getPath(node, "*.effects"), "onChildDeleted", updateForEffectsChange);
+	DB.removeHandler(DB.getPath(node, "*.effects"), "onChildDeleted", updateForEffectsChange)
 	--DB.removeHandler(DB.getPath(node, "*.effects"), "onChildUpdate", updateForEffectsChange);
-	DB.removeHandler(DB.getPath(node, "*.effects.*.label"), "onUpdate", updateEffectChange);
-	DB.removeHandler(DB.getPath(node, "*.effects.*.isactive"), "onUpdate", updateEffectChange);
+	DB.removeHandler(DB.getPath(node, "*.effects.*.label"), "onUpdate", updateEffectChange)
+	DB.removeHandler(DB.getPath(node, "*.effects.*.isactive"), "onUpdate", updateEffectChange)
 
-	DB.removeHandler(DB.getPath(node, "*.targets"), "onChildUpdate", toggleSelectedTargets);
-	DB.removeHandler(DB.getPath(node, "*.targets"), "onChildDeleted", toggleSelectedTargets);
-	DB.removeHandler(DB.getPath(node, "*.targets"), "onChildAdded", toggleSelectedTargets);
+	DB.removeHandler(DB.getPath(node, "*.targets"), "onChildUpdate", toggleSelectedTargets)
+	DB.removeHandler(DB.getPath(node, "*.targets"), "onChildDeleted", toggleSelectedTargets)
+	DB.removeHandler(DB.getPath(node, "*.targets"), "onChildAdded", toggleSelectedTargets)
 	--DB.removeHandler("combattracker.list", "onChildAdded", updateWindowlist);
 end
 
@@ -59,36 +59,36 @@ end
   Filter tokens that are not ct.visible == 1 out from CT
 ]]
 function onFilter(w)
---  Debug.console("cta_combatants_host.lua","onFilter","w.getDatabaseNode()",w.getDatabaseNode());
+	--  Debug.console("cta_combatants_host.lua","onFilter","w.getDatabaseNode()",w.getDatabaseNode());
 
-  -- local bVisible = (DB.getValue(w.getDatabaseNode(), "ct.visible",1) == 1);
-  -- if not bVisible then
-  --   return false;
-  -- else
-  --   return true;
-  -- end
+	-- local bVisible = (DB.getValue(w.getDatabaseNode(), "ct.visible",1) == 1);
+	-- if not bVisible then
+	--   return false;
+	-- else
+	--   return true;
+	-- end
 
-  return true;
+	return true
 end
 
 --[[
   update effects for this CT entry
 ]]
 function processEffectChanges(nodeCT)
---local nodeCT = nodeEntry.getParent();
-local nodeChar = CombatManagerADND.getNodeFromCT(nodeCT);
+	--local nodeCT = nodeEntry.getParent();
+	local nodeChar = CombatManagerADND.getNodeFromCT(nodeCT)
 
---Debug.console("cta_combatants_host.lua","processEffectChanges","nodeEntry-------------------->",nodeCT);
---if UtilityManagerADND.rateLimitOK(processEffectChanges,nodeCT,0.95) then
--- need to figure out how to avoid doing these calls.
-  -- Causes a LOT of latency
-  AbilityScoreADND.detailsUpdate(nodeChar);
-  AbilityScoreADND.detailsPercentUpdate(nodeChar);
-  AbilityScoreADND.updateForEffects(nodeChar);
-  --
---end
+	--Debug.console("cta_combatants_host.lua","processEffectChanges","nodeEntry-------------------->",nodeCT);
+	--if UtilityManagerADND.rateLimitOK(processEffectChanges,nodeCT,0.95) then
+	-- need to figure out how to avoid doing these calls.
+	-- Causes a LOT of latency
+	AbilityScoreADND.detailsUpdate(nodeChar)
+	AbilityScoreADND.detailsPercentUpdate(nodeChar)
+	AbilityScoreADND.updateForEffects(nodeChar)
+	--
+	--end
 
-CharManager.updateHealthScore(nodeChar);
+	CharManager.updateHealthScore(nodeChar)
 end
 
 --[[
@@ -96,25 +96,25 @@ end
   combattracket.list.id-XXXXXX.effects.id-XXXXXX.isactive
 ]]
 function updateEffectChange(nodeEntry)
-  --local nodeEffect = nodeEntry.getParent();
-  local nodeCT = nodeEntry.getChild("....");
-  processEffectChanges(nodeCT);
+	--local nodeEffect = nodeEntry.getParent();
+	local nodeCT = nodeEntry.getChild("....")
+	processEffectChanges(nodeCT)
 end
 
 --[[
   Run when we delete a effect
 ]]
 function updateForEffectsChange(nodeEntry)
-  --Debug.console("cta_combatants_host.lua","updateForEffectsChange","nodeEntry-------------------->",nodeEntry);
-  processEffectChanges(nodeEntry.getParent());
+	--Debug.console("cta_combatants_host.lua","updateForEffectsChange","nodeEntry-------------------->",nodeEntry);
+	processEffectChanges(nodeEntry.getParent())
 end
 
 -- toggle selected targets for entry selected/target changes
 function toggleSelectedTargets(nodeTargets)
---Debug.console("cta_combatants_host.lua","toggleSelectedTargets","nodeTargets",nodeTargets);
-  local nodeCT = nodeTargets.getParent();
-  clearCombatantsSelectedTargetIcon();
-  markCombatantsSelected(nodeCT);
+	--Debug.console("cta_combatants_host.lua","toggleSelectedTargets","nodeTargets",nodeTargets);
+	local nodeCT = nodeTargets.getParent()
+	clearCombatantsSelectedTargetIcon()
+	markCombatantsSelected(nodeCT)
 end
 
 -- this is called from (at least) cta.lua, so including it here
@@ -135,16 +135,16 @@ end
 
 -- -- find the window in the windowlist for a specific nodeCT
 function findWindowByNode(nodeCT)
-  local win = nil;
-  for _,v in pairs(getWindows(true)) do
-    local node = v.getDatabaseNode();
-    if node == nodeCT then
-      win = v;
-      break;
-    end
-  end
+	local win = nil
+	for _, v in pairs(getWindows(true)) do
+		local node = v.getDatabaseNode()
+		if node == nodeCT then
+			win = v
+			break
+		end
+	end
 
-  return win;
+	return win
 end
 
 function onDrop(x, y, draginfo)
@@ -164,7 +164,7 @@ function onDrop(x, y, draginfo)
 			return true
 		elseif sClass == "npc" then
 			-- take the token from draginfo
-			sToken = DB.getValue(draginfo.getDatabaseNode(), "token", "");
+			sToken = DB.getValue(draginfo.getDatabaseNode(), "token", "")
 
 			-- get the name from the dragged node
 			local sDraggedNodeName = DB.getText(draginfo.getDatabaseNode(), "name", "")
@@ -174,12 +174,13 @@ function onDrop(x, y, draginfo)
 
 			-- OSRIC npc exists, alternative or dragged from osric itself
 			if nodeOsricNpcResult ~= nil then
+				--Debug.console(nodeOsricNpcResult.getChild("token").getValue(), nodeOsricNpcResult.getChild("name").getValue())
 				-- get the original osric token and name
 				local sOriginalOsricNodeToken = nodeOsricNpcResult.getChild("token").getValue()
 				local sOriginalOsricNodeName = nodeOsricNpcResult.getChild("name").getValue()
 				--Debug.console("sOriginalOsricNodeToken", sOriginalOsricNodeToken)
 				--Debug.console("sOriginalOsricNodeName", sOriginalOsricNodeName)
-				
+
 				-- tokens are different between module and osric
 				if sToken ~= sOriginalOsricNodeToken then
 					-- set the token to whatever was dragged
@@ -199,9 +200,7 @@ function onDrop(x, y, draginfo)
 				--Debug.console("osric token reset")
 				nodeOsricNpcResult.getChild("token").setValue(sOriginalOsricNodeToken)
 				nodeOsricNpcResult.getChild("name").setValue(sOriginalOsricNodeName)
-				--Debug.console(nodeOsricNpcResult.getChild("token").getValue(), nodeOsricNpcResult.getChild("name").getValue())
 			else
-				
 				local nodeNpc = draginfo.getDatabaseNode()
 
 				CombatRecordManager.onRecordTypeEvent("npc", {sClass = "npc", nodeRecord = nodeNpc})
@@ -264,66 +263,65 @@ end
 
 -- -- on down click load the node into the main display window
 function onClickDown(nButton, x, y)
---Debug.console("cta_combatants_host.lua","onClickDown","nButton",nButton);
---  local selectedSubwindow =  window.parentcontrol.window.selected;
-  if nButton == 1 then
-    if not Input.isControlPressed() then
-      local win = getWindowAt(x,y);
-      if win then
-        local nodeCT = win.getDatabaseNode();
-        selectEntryCTA(nodeCT);
-        return true;
-      else
-        -- clicked empty space, unselect any entry
-        clearSelect();
-      end
-    end
-  end
-  return true;
+	--Debug.console("cta_combatants_host.lua","onClickDown","nButton",nButton);
+	--  local selectedSubwindow =  window.parentcontrol.window.selected;
+	if nButton == 1 then
+		if not Input.isControlPressed() then
+			local win = getWindowAt(x, y)
+			if win then
+				local nodeCT = win.getDatabaseNode()
+				selectEntryCTA(nodeCT)
+				return true
+			else
+				-- clicked empty space, unselect any entry
+				clearSelect()
+			end
+		end
+	end
+	return true
 end
 
 -- --on release Select the token, if control, then "target"
 function onClickRelease(nButton, x, y)
---Debug.console("cta_combatants_host.lua","onClickRelease","nButton",nButton);
-  local win = getWindowAt(x,y);
-  if win then
-    --return win.token.onClickRelease(nButton);
-    if nButton == 1 then
-      if Input.isControlPressed() then
-        local nodeActive = getSelectedNode()
-        if nodeActive then
-          local nodeTarget = win.getDatabaseNode();
-          if nodeTarget then
-            TargetingManager.toggleCTTarget(nodeActive, nodeTarget);
-          end
-        end
-      else
-        local tokeninstance = CombatManager.getTokenFromCT(win.getDatabaseNode());
-        if tokeninstance and tokeninstance.isActivable() then
-          tokeninstance.setActive(not tokeninstance.isActive());
-        end
-      end
-
-    else
-      local tokeninstance = CombatManager.getTokenFromCT(win.getDatabaseNode());
-      if tokeninstance then
-        tokeninstance.setScale(1.0);
-      end
-    end
-    return true;
-  end
+	Debug.console("cta_combatants_host.lua", "onClickRelease", "nButton", nButton)
+	local win = getWindowAt(x, y)
+	if win then
+		--return win.token.onClickRelease(nButton);
+		if nButton == 1 then
+			if Input.isControlPressed() then
+				local nodeActive = getSelectedNode()
+				if nodeActive then
+					local nodeTarget = win.getDatabaseNode()
+					if nodeTarget then
+						TargetingManager.toggleCTTarget(nodeActive, nodeTarget)
+					end
+				end
+			else
+				local tokeninstance = CombatManager.getTokenFromCT(win.getDatabaseNode())
+				if tokeninstance and tokeninstance.isActivable() then
+					tokeninstance.setActive(not tokeninstance.isActive())
+				end
+			end
+		else
+			local tokeninstance = CombatManager.getTokenFromCT(win.getDatabaseNode())
+			if tokeninstance then
+				tokeninstance.setScale(1.0)
+			end
+		end
+		return true
+	end
 end
 
 -- find the selected node
 function getSelectedNode()
-  local node = nil;
-  for _,nodeCT in pairs(CombatManager.getCombatantNodes()) do
-    if DB.getValue(nodeCT,"selected",0) == 1 then
-      node = nodeCT;
-      break;
-    end
-  end
-  return node;
+	local node = nil
+	for _, nodeCT in pairs(CombatManager.getCombatantNodes()) do
+		if DB.getValue(nodeCT, "selected", 0) == 1 then
+			node = nodeCT
+			break
+		end
+	end
+	return node
 end
 
 -- -- select entry and perform tasks related to first time viewing

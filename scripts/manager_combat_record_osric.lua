@@ -1,9 +1,157 @@
 function onInit()
+	-- if super and super.onInit then
+    --     Debug.console("super and oninit found")
+    --     super.onInit()
+    -- end
+	ActorCommonManager.setRecordTypeSpaceReachCallback("npc", CombatRecordManagerOsric.getNPCSpaceReach);
+
 	if Session.IsHost then
+		--added 2023-08-06
+		CombatRecordManager.setRecordTypeCallback("npc", CombatRecordManagerOsric.onNPCAdd);
+		CombatRecordManager.setRecordTypePostAddCallback("charsheet", CombatRecordManagerOsric.onPCPostAdd);
+		---------- end add
+
 		CombatRecordManager.setRecordTypeCallback("battle", CombatRecordManagerOsric.onBattleAdd)
 		CombatRecordManager.setRecordTypePostAddCallback("npc", CombatRecordManagerOsric.onNPCPostAdd);
 	end
 end
+
+---------------------- added to troubleshoot npc sizes 20230806
+-- JPG - 2022-09-25 - Migrated CombatManager2 to CombatRecordManagerADND
+function getNPCSpaceReach(rActor)
+	Debug.console("getNPCSpaceReach")
+	local nSpace = GameSystem.getDistanceUnitsPerGrid();
+	local nReach = nSpace;
+	
+	local nodeActor = ActorManager.getCreatureNode(rActor);
+	if not nodeActor then
+		return nSpace, nReach;
+	end
+
+	local sSize = StringManager.trim(DB.getValue(nodeActor, "size", ""):lower());
+	if sSize == "large" then
+		nSpace = nSpace * 2;
+	elseif sSize == "huge" then
+		nSpace = nSpace * 3;
+	elseif sSize == "gargantuan" then
+		nSpace = nSpace * 4;
+	end
+
+	Debug.console("nodeActor", nodeActor, "nSpace", nSpace, "nReach", nReach, "sSize", sSize)
+	return nSpace, nReach;
+end
+
+-- JPG - 2022-09-25 - Updated function to most recent CoreRPG methodology
+function onPCPostAdd(tCustom)
+	Debug.console("onPCPostAdd")
+	
+	-- Parameter validation
+	if not tCustom.nodeRecord or not tCustom.nodeCT then
+		return;
+	end
+
+	-- Update CT effects
+	helperAddEffects(tCustom);
+end
+
+-- JPG - 2022-09-25 - Updated function to most recent CoreRPG methodology
+function onNPCAdd(tCustom)
+	Debug.console("onNPCAdd")
+
+	if not tCustom.nodeRecord then
+		return false;
+	end
+	tCustom.nodeCT = CombatManager.createCombatantNode();
+	if not tCustom.nodeCT then
+		return false;
+	end
+
+	helperAddHiddenName(tCustom);
+
+	if DELAYED_COPY then
+		helperCopyCTSourceToNode(tCustom.nodeRecord, tCustom.nodeCT, _tInitialCopy);
+	else
+		DB.copyNode(tCustom.nodeRecord, tCustom.nodeCT);
+	end
+
+	DB.setValue(tCustom.nodeCT, "locked", "number", 1);
+
+	-- Remove any combatant specific information
+	DB.setValue(tCustom.nodeCT, "active", "number", 0);
+	DB.setValue(tCustom.nodeCT, "tokenrefid", "string", "");
+	DB.setValue(tCustom.nodeCT, "tokenrefnode", "string", "");
+	DB.deleteChildren(tCustom.nodeCT, "effects");
+
+	CombatRecordManager.handleStandardCombatAddFields(tCustom);
+	CombatRecordManager.handleStandardCombatAddSpaceReach(tCustom);
+	CombatRecordManager.handleStandardCombatAddPlacement(tCustom);
+	return true;
+end
+
+function helperAddHiddenName(tCustom)
+	Debug.console("helperAddHiddenName")
+	
+	if not tCustom.sName then
+		tCustom.sName = DB.getValue(tCustom.nodeRecord, "name", "");
+	end
+	
+	tCustom.sNameHidden = tCustom.sName:match("%(.*%)");
+	tCustom.sName = StringManager.trim(tCustom.sName:gsub("%(.*%)", ""));
+end
+function helperAddHiddenName2(tCustom)
+	-- save DM only "hiddten text" if necessary to display in host CT
+	if (tCustom.sNameHidden or "") ~= "" then
+		DB.setValue(tCustom.nodeCT, "name_hidden", "string", tCustom.sNameHidden);
+	end
+end
+function helperAddSize(tCustom)
+	Debug.console("helperAddSize", "tCustom", tCustom)
+	-- base modifier for initiative
+	-- we set modifiers based on size per DMG for AD&D -celestian
+	DB.setValue(tCustom.nodeCT, "init", "number", 0);
+
+	-- Determine size
+	local sSize = StringManager.trim(DB.getValue(tCustom.nodeCT, "size", "")):lower();
+	local sSizeNoLower = StringManager.trim(DB.getValue(tCustom.nodeCT, "size", ""));
+
+	Debug.console("helperAddSize", "sSize", sSize, "sSizeNoLower", sSizeNoLower)
+
+	if sSize == "tiny" or string.find(sSizeNoLower, "T") then
+		DB.setValue(tCustom.nodeCT, "init", "number", 0);
+	elseif sSize == "small" or string.find(sSizeNoLower, "S") then
+		DB.setValue(tCustom.nodeCT, "init", "number", 3);
+	elseif sSize == "medium" or string.find(sSizeNoLower, "M") then
+		DB.setValue(tCustom.nodeCT, "init", "number", 3);
+	elseif sSize == "large" or string.find(sSizeNoLower, "L") then
+		DB.setValue(tCustom.nodeCT, "init", "number", 6);
+	elseif string.find(sSizeNoLower, "GIANT") then
+		DB.setValue(tCustom.nodeCT, "space", "number", 10);
+		DB.setValue(tCustom.nodeCT, "init", "number", 6);
+	elseif sSize == "huge" or string.find(sSizeNoLower, "H") then
+		Debug.console("(Hh)uge found")
+		DB.setValue(tCustom.nodeCT, "space", "number", 10);
+		DB.setValue(tCustom.nodeCT, "init", "number", 9);
+	elseif sSize == "gargantuan" or string.find(sSizeNoLower, "G") then
+		DB.setValue(tCustom.nodeCT, "space", "number", 15);
+		DB.setValue(tCustom.nodeCT, "init", "number", 12);
+	end
+	
+	-- allow custom TOKEN_SIZE: XX 
+	if sSizeNoLower:find("TOKEN_SIZE:%s?%d+") then
+		local sTokenSize = sSizeNoLower:match("TOKEN_SIZE:%s?(%d+)");
+		local nTokenSize = tonumber(sTokenSize) or 5;
+		DB.setValue(tCustom.nodeCT, "space", "number", nTokenSize);
+		Debug.console(tCustom.nodeCT, "space", "number", nTokenSize)
+	end
+	-- allow custom TOKEN_REACH: XX 
+	if sSizeNoLower:find("TOKEN_REACH:%s?%d+") then
+		local sTokenReach = sSizeNoLower:match("TOKEN_REACH:%s?(%d+)");
+		local nTokenReach = tonumber(sTokenReach) or 5;
+		DB.setValue(tCustom.nodeCT, "reach", "number", nTokenReach);
+		Debug.console(tCustom.nodeCT, "reach", "number", nTokenReach)
+	end
+end
+-----------------------------------end add
 
 --
 --	Battle Record
@@ -13,6 +161,7 @@ function onBattleAdd(tCustom)
 	return true
 end
 
+-- tracks CoreRPG - modified 20230708
 function addBattle(tCustom)
 	-- Setup
 	if not tCustom.nodeRecord then
@@ -26,12 +175,8 @@ function addBattle(tCustom)
 		return
 	end
 
-	-- Handle legacy override
-	local fOverride = CombatManager.getCustomAddBattle()
-	if fOverride then
-		fOverride(tCustom.nodeRecord)
-		return
-	end
+	-- Clean up any placement tokens from an open battle window
+	CombatRecordManager.clearBattlePlacementTokens(tCustom);
 
 	-- Standard handling
 	CombatRecordManagerOsric.addBattleHelper(tCustom)
@@ -154,7 +299,7 @@ function onNPCPostAdd(tCustom)
 	-- add the 2e stuff, since we overrode the callback
 	--CombatRecordManagerADND.onNPCPostAdd(tCustom)
 	-- Handle game system specific size considerations
-	CombatRecordManagerADND.helperAddSize(tCustom);
+	CombatRecordManagerOsric.helperAddSize(tCustom);
 
 	-- Calculate and set HP
 	CombatRecordManagerADND.helperAddHP(tCustom);

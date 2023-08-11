@@ -28,19 +28,17 @@ end
 
 function rollRandomInitOsric(nMod, bADV)
     local nInitResult = math.random(DataCommonADND.nDefaultInitiativeDice)
-    --Debug.console("rollrandominitnew 39", nInitResult)
+    Debug.console("rollRandomInitOsric")
     return nInitResult
 end
 
 --
 function rollEntryInitOsric(nodeEntry)
-    --Debug.console("nodeEntry", nodeEntry)
+    Debug.console("rollEntryInitOsric")
 
     if not nodeEntry then
         return
     end
-
-    Debug.console("rollEntryInitOsric")
 
     -- PC/NPC init
     local sClass, sRecord = DB.getValue(nodeEntry, "link", "", "")
